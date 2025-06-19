@@ -10,3 +10,8 @@ export const wisp = buildWispClient({
 });
 
 export type { GetPostsResult, GetPostResult };
+
+export async function getPhotographyProjects() {
+  const res = await wisp.getContent("photographyProject");
+  return res;
+}
