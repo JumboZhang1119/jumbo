@@ -11,7 +11,24 @@ export const wisp = buildWispClient({
 
 export type { GetPostsResult, GetPostResult };
 
+// export async function getPhotographyProjects() {
+//   const res = await wisp.getContent({
+//     contentTypeSlug: "photographyProject",
+//     contentSlug: "tpac"
+//   });
+//   console.log("Wisp photographyProject data:", res);
+//   return res;
+// }
+
 export async function getPhotographyProjects() {
-  const res = await wisp.getContent("photographyProject");
-  return res;
+  try {
+    const res = await wisp.getContents({
+      contentTypeSlug: "photographyProject",
+      limit: "all",
+    });
+    return res;
+  } catch (error) {
+    console.error("Error fetching photography projects:", error);
+    return null;
+  }
 }
