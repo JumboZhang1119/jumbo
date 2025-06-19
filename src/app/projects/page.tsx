@@ -1,7 +1,9 @@
 import { getPhotographyProjects } from "@/lib/wisp";
+import Image from "next/image"
 
 export default async function ProjectsPage() {
-  const projects = await getPhotographyProjects();
+  const projectsResult = await getPhotographyProjects();
+  const projects = projectsResult.items;
 
   return (
     <main className="container mx-auto px-5 py-10">
@@ -11,7 +13,7 @@ export default async function ProjectsPage() {
           <div key={project.id} className="border rounded shadow p-4">
             <h2 className="text-xl font-semibold mb-2">{project.title}</h2>
             {project.coverImage && (
-              <img
+              <Image
                 src={project.coverImage}
                 alt={project.title}
                 className="w-full h-48 object-cover rounded"
