@@ -3,6 +3,7 @@ import Image from "next/image"
 
 export default async function ProjectsPage() {
   const projectsResult = await getPhotographyProjects();
+  console.log("projectsResult:", projectsResult);
   const projects = projectsResult.items;
 
   return (
