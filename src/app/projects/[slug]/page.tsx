@@ -16,13 +16,13 @@ type Props = {
   };
 };
 
-export default async function ProjectDetailPage({ params }: Props) {
-    const slug = params.slug;
+export default async function ProjectDetailPage({ props }: Props) {
+    const slug = props.params.slug;
   
     try {
       const { content } = await wisp.getContent({
         contentTypeSlug: "photographyProject",
-        contentSlug: params.slug,
+        contentSlug: slug,
       });
   
       return (
