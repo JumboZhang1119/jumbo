@@ -17,11 +17,7 @@ type Props = {
 };
 
 export default async function ProjectDetailPage({ params }: Props) {
-    console.log('ProjectDetailPage params:', params);
-    const resolvedParams = await Promise.resolve(params);
-    const slug = resolvedParams.slug;
-
-    console.log('Resolved slug:', slug);
+    const slug = params.slug;
   
     try {
       const { content } = await wisp.getContent({
