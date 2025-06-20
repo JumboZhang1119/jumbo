@@ -4,11 +4,11 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getPhotographyProjects } from "@/lib/wisp";
 
-export async function generateStaticParams() {
+export async function generateStaticParams(): Promise<{ slug: string }[]> {
   const { contents } = await getPhotographyProjects();
-  console.log(contents.map(p => p.slug));
   return contents.map((project) => ({ slug: project.slug }));
 }
+
 
 type Props = {
   params: {
