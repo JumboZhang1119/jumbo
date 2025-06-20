@@ -2,6 +2,8 @@ import { config } from "@/config";
 import type { MetadataRoute } from "next";
 import urlJoin from "url-join";
 
+export const revalidate = 0;
+
 const staticPaths = ["about"];
 
 export default function sitemap(): MetadataRoute.Sitemap {
