@@ -12,13 +12,12 @@ export async function generateStaticParams() {
 
 type Props = {
   params: {
-    params: { slug: string | string[] | Promise<{ slug: string }> };
+    slug: string;
   };
 };
 
-export default async function ProjectDetailPage(props: Props) {
-    const params = await (props.params instanceof Promise ? props.params : Promise.resolve(props.params));
-    const slug = Array.isArray(params.slug) ? params.slug[0] : params.slug;
+export default async function ProjectDetailPage({ params }: Props) {
+    const slug = params.slug;
 
     console.log('Resolved slug:', slug);
   
