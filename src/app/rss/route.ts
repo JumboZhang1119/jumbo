@@ -6,6 +6,8 @@ import urlJoin from "url-join";
 import { wisp } from "../../lib/wisp";
 import { config } from "@/config";
 
+export const revalidate = 0;
+
 const baseUrl = config.baseUrl;
 
 export async function GET() {
