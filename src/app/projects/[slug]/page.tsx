@@ -17,7 +17,9 @@ type Props = {
 };
 
 export default async function ProjectDetailPage({ params }: Props) {
-    const slug = params.slug;
+    console.log('ProjectDetailPage params:', params);
+    const resolvedParams = await Promise.resolve(params);
+    const slug = resolvedParams.slug;
 
     console.log('Resolved slug:', slug);
   
