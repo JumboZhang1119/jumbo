@@ -3,13 +3,15 @@ import { wisp } from './wisp';
 export async function getPhotoItemsByProjectTag(projectTag: string) {
   try {
     const result = await wisp.getContents({
-      contentTypeSlug: 'photoItem',
-      filters: {
-        tags: projectTag, // 這裡會找出 tags 包含該專案 tag 的所有照片
-      },
+        contentTypeSlug: "photoItem",
+        limit: "all", // 一次取出所有，然後前端過濾
     });
+    
+    const filtered = result.contents?.filter(photo =>
+        photo.content.tags?.includes(projectTag)
+    ) ?? [];
 
-    return result.contents || [];
+    return filtered;
   } catch (err) {
     console.error('Failed to fetch photo items:', err);
     return [];
