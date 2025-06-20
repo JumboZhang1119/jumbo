@@ -30,15 +30,21 @@ export default async function ProjectDetailPage(context: { params: Promise<{ slu
     const { content } = await wisp.getContent({
       contentTypeSlug: "photographyProject",
       contentSlug: slug,
-    }) as { content: PhotographyProjectContent };
+    });
+
+    const projectContent = content.content;
+    
+
+    console.log("content:", projectContent);
+
 
     return (
       <main className="container mx-auto px-5 py-10">
-        <h1 className="text-3xl font-bold mb-6">{content.title}</h1>
-        {content.coverImage ? (
+        <h1 className="text-3xl font-bold mb-6">{projectContent.title}</h1>
+        {projectContent.coverImage ? (
           <Image
-            src={content.coverImage}
-            alt={content.title}
+            src={projectContent.coverImage}
+            alt={projectContent.title}
             width={1200}
             height={800}
             className="rounded-lg"
@@ -48,7 +54,7 @@ export default async function ProjectDetailPage(context: { params: Promise<{ slu
             No Image Available
           </div>
         )}
-        <div className="mt-4 prose">{content.description || "No description."}</div>
+        <div className="mt-4 prose">{projectContent.description || "No description."}</div>
       </main>
     );
   } catch (err) {
