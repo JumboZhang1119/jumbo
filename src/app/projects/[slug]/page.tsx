@@ -16,7 +16,8 @@ type Props = {
   };
 };
 
-export default async function ProjectDetailPage({ params }: { params: {slug: string} }) {
+export default async function ProjectDetailPage(context: { params: { slug: string } }) {
+    const { params } = await Promise.resolve(context);
     const slug = params.slug;
   
     try {
