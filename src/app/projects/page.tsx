@@ -82,7 +82,7 @@ export default function ProjectsPageWrapper() {
 
       <div className="pt-28">
         {/* <h1 className="text-4xl font-bold mb-6 text-center tracking-tight">Photography Projects</h1> */}
-        <h1 className="text-6xl font-medium mb-5 text-center tracking-wide" style={{ fontFamily: 'OneDay, sans-serif' }}>Photography Projects</h1>
+        <h1 className="text-4xl sm:text-5xl md:text-6xl font-medium mb-6 text-center tracking-wide" style={{ fontFamily: 'OneDay, sans-serif' }}>Photography Projects</h1>
 
         {mode === 'theme' && (
           <div className="mb-6 text-center">
