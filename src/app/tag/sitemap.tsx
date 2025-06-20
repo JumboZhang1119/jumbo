@@ -3,6 +3,8 @@ import urlJoin from "url-join";
 import { config } from "@/config";
 import { wisp } from "@/lib/wisp";
 
+export const revalidate = 0;
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const result = await wisp.getTags();
   return [
