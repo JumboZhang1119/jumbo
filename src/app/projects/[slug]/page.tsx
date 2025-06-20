@@ -6,7 +6,7 @@ import { getPhotographyProjects } from "@/lib/wisp";
 
 export async function generateStaticParams() {
   const { contents } = await getPhotographyProjects();
-  console.log(contents.map(p => p.slug))
+  console.log(contents.map(p => p.slug));
   return contents.map((project) => ({ slug: project.slug }));
 }
 
@@ -16,38 +16,36 @@ type Props = {
   };
 };
 
-export default async function ProjectDetailPage(context: { params: { slug: string } }) {
-    const { params } = await Promise.resolve(context);
-    const slug = params.slug;
-  
-    try {
-      const { content } = await wisp.getContent({
-        contentTypeSlug: "photographyProject",
-        contentSlug: slug,
-      });
-  
-      return (
-        <main className="container mx-auto px-5 py-10">
-          <h1 className="text-3xl font-bold mb-6">{content.title}</h1>
-          {content.coverImage ? (
-            <Image
-              src={content.coverImage}
-              alt={content.title}
-              width={1200}
-              height={800}
-              className="rounded-lg"
-            />
-          ) : (
-            <div className="w-full h-[300px] bg-gray-200 flex items-center justify-center text-gray-500 rounded-lg">
-              No Image Available
-            </div>
-          )}
-          <div className="mt-4 prose">{content.description || "No description."}</div>
-        </main>
-      );
-    } catch (err) {
-      console.error("Error loading project detail:", err);
-      return notFound();
-    }
+export default async function ProjectDetailPage({ params }: Props) {
+  const slug = params.slug;
+
+  try {
+    const { content } = await wisp.getContent({
+      contentTypeSlug: "photographyProject",
+      contentSlug: slug,
+    });
+
+    return (
+      <main className="container mx-auto px-5 py-10">
+        <h1 className="text-3xl font-bold mb-6">{content.title}</h1>
+        {content.coverImage ? (
+          <Image
+            src={content.coverImage}
+            alt={content.title}
+            width={1200}
+            height={800}
+            className="rounded-lg"
+          />
+        ) : (
+          <div className="w-full h-[300px] bg-gray-200 flex items-center justify-center text-gray-500 rounded-lg">
+            No Image Available
+          </div>
+        )}
+        <div className="mt-4 prose">{content.description || "No description."}</div>
+      </main>
+    );
+  } catch (err) {
+    console.error("Error loading project detail:", err);
+    return notFound();
   }
-  
+}
