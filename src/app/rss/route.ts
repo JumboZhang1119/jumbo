@@ -1,4 +1,4 @@
-export const revalidate = 3600; // 1 hour
+// export const revalidate = 3600; // 1 hour for vercel page
 
 import { NextResponse } from "next/server";
 import RSS from "rss";
