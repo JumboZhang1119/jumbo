@@ -14,13 +14,6 @@ export async function generateStaticParams(): Promise<{ slug: string }[]> {
   return result.contents.map((project) => ({ slug: project.slug }));
 }
 
-type PhotographyProjectContent = {
-  title: string;
-  coverImage?: string;
-  description?: string;
-  // 其他欄位...
-};
-
 export default async function ProjectDetailPage(context: { params: Promise<{ slug: string }> }) {
   const params = await context.params;
   const slug = params.slug;
