@@ -64,15 +64,15 @@ export default function ProjectsPageWrapper() {
   return (
     <main className="max-w-screen-xl mx-auto px-4 sm:px-8 py-10 font-sans">
       {/* Floating navbar */}
-      <div className="fixed top-0 left-0 w-full bg-white/90 backdrop-blur-md shadow z-50 py-4 px-6 flex justify-center gap-4 border-b border-gray-200">
+      <div className="fixed top-0 left-0 w-full bg-white/45 backdrop-blur-md shadow z-50 py-4 px-6 flex justify-center gap-4 border-b border-gray-200">
         {['category', 'theme'].map((type) => (
           <button
             key={type}
             onClick={() => handleSelectMode(type as 'category' | 'theme')}
             className={`cursor-pointer px-5 py-2 rounded-full text-sm font-semibold transition-colors duration-200 ${
               mode === type
-                ? 'text-black bg-neutral-200'
-                : 'text-gray-500 hover:text-black'
+                ? 'text-black bg-gray-400/40 backdrop-blur-md border border-gray-500/50 shadow-sm'
+                : 'text-gray-500 hover:text-black hover:bg-gray-200/50 hover:backdrop-blur-md hover:border hover:border-gray-400/40'
             }`}
           >
             {type.charAt(0).toUpperCase() + type.slice(1)}
