@@ -5,9 +5,15 @@ import { notFound } from "next/navigation";
 import { getPhotographyProjects } from "@/lib/wisp";
 
 export async function generateStaticParams(): Promise<{ slug: string }[]> {
-  const { contents } = await getPhotographyProjects();
-  return contents.map((project) => ({ slug: project.slug }));
+  const result = await getPhotographyProjects();
+
+  if (!result || !result.contents) {
+    return [];
+  }
+
+  return result.contents.map((project) => ({ slug: project.slug }));
 }
+
 
 export default async function ProjectDetailPage(context: { params: Promise<{ slug: string }> }) {
   const params = await context.params;
