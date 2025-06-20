@@ -28,7 +28,7 @@ export default async function ProjectDetailPage(context: { params: Promise<{ slu
 
     // 針對每個 tag 呼叫 API 拿對應的照片
     const photosByTags = await Promise.all(
-      projectTags.map(tag => getPhotoItemsByProjectTag(tag))
+      projectTags.map((tag: string) => getPhotoItemsByProjectTag(tag))
     );
 
     // 合併陣列
