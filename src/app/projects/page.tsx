@@ -1,22 +1,22 @@
 // app/projects/page.tsx
 'use client';
 
-import { useSearchParams, useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { getPhotographyProjects } from '@/lib/wisp';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+
+const getResizedImage = (url: string, width: number) =>
+  url.replace('/upload/', `/upload/w_${width}/`);
+
 
 export default function ProjectsPageWrapper() {
   const [projects, setProjects] = useState<any[]>([]);
   const [categoryTags, setCategoryTags] = useState<string[]>([]);
   const [themeTags, setThemeTags] = useState<string[]>([]);
   const [mode, setMode] = useState<'category' | 'theme'>('theme');
-  const [activeTag, setActiveTag] = useState<string | null>(null);
-  const [filteredProjects, setFilteredProjects] = useState<any[]>([]);
-  const searchParams = useSearchParams();
-  const router = useRouter();
+  const [activeTag, setActiveTag] = useState<string>('Theme:All');
 
   useEffect(() => {
     async function fetchProjects() {
@@ -37,36 +37,29 @@ export default function ProjectsPageWrapper() {
 
       setCategoryTags(Array.from(categorySet));
       setThemeTags(['Theme:All', ...Array.from(themeSet)]);
-
-      const tagParam = searchParams.get('tag') || 'Theme:All';
-      setActiveTag(tagParam);
-
-      setFilteredProjects(
-        data.filter((p) => {
-          if (tagParam === 'Theme:All') return true;
-          return (p.content.tags || []).includes(tagParam);
-        })
-      );
     }
 
     fetchProjects();
-  }, [searchParams]);
+  }, []);
 
   const handleSelectMode = (selected: 'category' | 'theme') => {
     setMode(selected);
-    setActiveTag(selected === 'theme' ? 'Theme:All' : null);
-    router.push('/projects');
+    setActiveTag(selected === 'theme' ? 'Theme:All' : '');
   };
 
   const handleFilter = (tag: string) => {
-    const params = new URLSearchParams(window.location.search);
-    if (params.get('tag') === tag || tag === 'Theme:All') {
-      params.delete('tag');
-    } else {
-      params.set('tag', tag);
-    }
-    router.push(`/projects?${params.toString()}`);
+    setActiveTag(tag);
   };
+
+  const filteredProjects = useMemo(() => {
+    return projects.filter((p) => {
+      const tags: string[] = p.content.tags || [];
+      const modePrefix = mode === 'category' ? 'Category:' : 'Theme:';
+      const hasModeTag = tags.some((t) => t.startsWith(modePrefix));
+      const hasSelected = activeTag === 'Theme:All' || !activeTag ? true : tags.includes(activeTag);
+      return hasModeTag && hasSelected;
+    });
+  }, [projects, mode, activeTag]);
 
   return (
     <main className="max-w-screen-xl mx-auto px-4 sm:px-8 py-10 font-sans">
@@ -76,7 +69,7 @@ export default function ProjectsPageWrapper() {
           <button
             key={type}
             onClick={() => handleSelectMode(type as 'category' | 'theme')}
-            className={`px-5 py-2 rounded-full text-sm font-semibold transition-colors duration-200 ${
+            className={`cursor-pointer px-5 py-2 rounded-full text-sm font-semibold transition-colors duration-200 ${
               mode === type
                 ? 'text-black bg-neutral-200'
                 : 'text-gray-500 hover:text-black'
@@ -88,7 +81,8 @@ export default function ProjectsPageWrapper() {
       </div>
 
       <div className="pt-28">
-        <h1 className="text-4xl font-bold mb-6 text-center tracking-tight">Photography Projects</h1>
+        {/* <h1 className="text-4xl font-bold mb-6 text-center tracking-tight">Photography Projects</h1> */}
+        <h1 className="text-6xl font-medium mb-6 text-center tracking-wide" style={{ fontFamily: 'OneDay, sans-serif' }}>Photography Projects</h1>
 
         {mode === 'theme' && (
           <div className="mb-6 text-center">
@@ -98,7 +92,7 @@ export default function ProjectsPageWrapper() {
                 <button
                   key={tag}
                   onClick={() => handleFilter(tag)}
-                  className={`px-4 py-1.5 text-sm rounded-full transition-colors duration-200 ${
+                  className={`cursor-pointer px-4 py-1.5 text-sm rounded-full transition-colors duration-200 ${
                     tag === activeTag
                       ? 'bg-black text-white'
                       : 'text-gray-600 hover:text-black bg-neutral-100'
@@ -112,45 +106,36 @@ export default function ProjectsPageWrapper() {
         )}
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          {filteredProjects
-            .filter((p) => {
-              if (!mode) return false;
-              const tags: string[] = p.content.tags || [];
-              const modePrefix = mode === 'category' ? 'Category:' : 'Theme:';
-              const hasModeTag = tags.some((t) => t.startsWith(modePrefix));
-              const hasSelected = activeTag ? tags.includes(activeTag) || activeTag === 'Theme:All' : true;
-              return hasModeTag && hasSelected;
-            })
-            .map((project) => (
-              <motion.div
-                key={project.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3 }}
+          {filteredProjects.map((project) => (
+            <motion.div
+              key={project.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <Link
+                href={`/projects/${project.slug}`}
+                className="group block rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300"
               >
-                <Link
-                  href={`/projects/${project.slug}`}
-                  className="group block rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300"
-                >
-                  <div className="relative w-full h-64">
-                    <Image
-                      src={project.content.coverImage}
-                      alt={project.content.title}
-                      fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                  </div>
-                  <div className="p-4 bg-white">
-                    <h2 className="text-lg font-semibold group-hover:text-black transition">
-                      {project.content.title}
-                    </h2>
-                    <p className="text-sm text-gray-600 mt-1 line-clamp-2">
-                      {project.content.description || 'No description'}
-                    </p>
-                  </div>
-                </Link>
-              </motion.div>
-            ))}
+                <div className="relative w-full h-64">
+                  <Image
+                    src={getResizedImage(project.content.coverImage, 1200)}
+                    alt={project.content.title}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                <div className="p-4 bg-white">
+                  <h2 className="text-lg font-semibold group-hover:text-black transition">
+                    {project.content.title}
+                  </h2>
+                  <p className="text-sm text-gray-600 mt-1 line-clamp-2">
+                    {project.content.description || 'No description'}
+                  </p>
+                </div>
+              </Link>
+            </motion.div>
+          ))}
         </div>
       </div>
     </main>
