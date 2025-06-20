@@ -23,13 +23,24 @@ export default async function ProjectDetailPage(context: { params: Promise<{ slu
       contentSlug: slug,
     });
     const projectContent = content.content;
-
-    // 這裡先拿到所有照片，再過濾
-    // 你也可以改成在 photoItemApi.ts 寫過濾函式，這邊直接呼叫
-    const allPhotos = await getPhotoItemsByProjectTag();
-
+    // 先拿到專案的 tags
     const projectTags = projectContent.tags || [];
-    const matchingPhotos = allPhotos.filter((photo: any) => {
+
+    // 針對每個 tag 呼叫 API 拿對應的照片
+    const photosByTags = await Promise.all(
+      projectTags.map(tag => getPhotoItemsByProjectTag(tag))
+    );
+
+    // 合併陣列
+    const allPhotos = photosByTags.flat();
+
+    // 用 Map 以 photo.id 去重複（比 title 更好）
+    const uniquePhotos = Array.from(
+      new Map(allPhotos.map(p => [p.id, p])).values()
+    );
+
+    // 再篩選符合 projectTags 中任一 tag 的照片（理論上 API 已過濾，這裡是保險）
+    const matchingPhotos = uniquePhotos.filter((photo: any) => {
       const tags = photo.content.tags || [];
       return tags.some((t: string) => projectTags.includes(t));
     });
