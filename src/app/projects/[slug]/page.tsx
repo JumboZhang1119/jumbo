@@ -9,15 +9,10 @@ export async function generateStaticParams(): Promise<{ slug: string }[]> {
   return contents.map((project) => ({ slug: project.slug }));
 }
 
-
-type Props = {
-  params: {
-    slug: string;
-  };
-};
-
-export default async function ProjectDetailPage({ params }: Props) {
+export default async function ProjectDetailPage(context: { params: Promise<{ slug: string }> }) {
+  const params = await context.params;
   const slug = params.slug;
+  console.log("awaitedParams:", slug);
 
   try {
     const { content } = await wisp.getContent({
