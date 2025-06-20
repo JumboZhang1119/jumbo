@@ -16,8 +16,8 @@ type Props = {
   };
 };
 
-export default async function ProjectDetailPage({ props }: Props) {
-    const slug = props.params.slug;
+export default async function ProjectDetailPage({ params }: { params: {slug: string} }) {
+    const slug = params.slug;
   
     try {
       const { content } = await wisp.getContent({
