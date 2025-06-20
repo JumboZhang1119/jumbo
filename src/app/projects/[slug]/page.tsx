@@ -4,7 +4,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getPhotographyProjects } from "@/lib/wisp";
 import { getPhotoItemsByProjectTag } from "@/lib/photoItemApi";
-import PhotoGrid from "./PhotoGrid.tsx";
+import PhotoGrid from "./PhotoGrid";
 
 export async function generateStaticParams(): Promise<{ slug: string }[]> {
   const result = await getPhotographyProjects();
