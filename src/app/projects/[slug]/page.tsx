@@ -1,10 +1,12 @@
-// src/app/projects/[slug]/page.tsx
 import { wisp } from "@/lib/wisp";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getPhotographyProjects } from "@/lib/wisp";
 import { getPhotoItemsByProjectTag } from "@/lib/photoItemApi";
 import PhotoGrid from "./PhotoGrid";
+import FloatingNavbar from "./FloatingNavbar";
+import Link from "next/link";
+import CoverSlider from './CoverSlider';
 
 export async function generateStaticParams(): Promise<{ slug: string }[]> {
   const result = await getPhotographyProjects();
@@ -12,68 +14,84 @@ export async function generateStaticParams(): Promise<{ slug: string }[]> {
   return result.contents.map((project) => ({ slug: project.slug }));
 }
 
-
 export default async function ProjectDetailPage(context: { params: Promise<{ slug: string }> }) {
   const params = await context.params;
   const slug = params.slug;
 
   try {
+    const allProjects = await getPhotographyProjects();
+    if (!allProjects || !allProjects.contents) return notFound();
+
     const { content } = await wisp.getContent({
       contentTypeSlug: "photographyProject",
       contentSlug: slug,
     });
     const projectContent = content.content;
-    // 先拿到專案的 tags
     const projectTags = projectContent.tags || [];
 
-    // 針對每個 tag 呼叫 API 拿對應的照片
+    // 取得所有 tag 相關的相片清單 (僅 metadata)
     const photosByTags = await Promise.all(
       projectTags.map((tag: string) => getPhotoItemsByProjectTag(tag))
     );
 
-    // 合併陣列
     const allPhotos = photosByTags.flat();
-
-    // 用 Map 以 photo.id 去重複（比 title 更好）
-    const uniquePhotos = Array.from(
-      new Map(allPhotos.map(p => [p.id, p])).values()
-    );
-
-    // 再篩選符合 projectTags 中任一 tag 的照片（理論上 API 已過濾，這裡是保險）
+    // 過濾重複並且符合該 project tags 的照片
+    const uniquePhotos = Array.from(new Map(allPhotos.map(p => [p.id, p])).values());
     const matchingPhotos = uniquePhotos.filter((photo: any) => {
       const tags = photo.content.tags || [];
       return tags.some((t: string) => projectTags.includes(t));
     });
 
+    // 找到同主題的其他專案 (theme tag 如 Theme:Kyoto)
+    const themeTag = projectTags.find(tag => tag.toLowerCase().includes("theme"));
+    const themeTagPrefix = themeTag.split(":")[0]; // 取得 'Theme'
+    const themeProjects = allProjects.contents.filter(p =>
+      p.content.tags?.some((t: string) => t.startsWith(themeTagPrefix))
+    );
+
+    // 計算目前專案在主題清單中的 index，方便初始定位
+    const currentIndex = themeProjects.findIndex(p => p.slug === slug);
+    // 為方便傳入 CoverSlider，添加 position 欄位
+    const adjacentProjects = themeProjects.map((p, idx) => ({
+      ...p,
+      position: idx - currentIndex,
+    }));
+
     return (
-      <main className="max-w-screen-xl mx-auto px-4 sm:px-8 py-10">
-        <div className="mb-10">
-          {projectContent.coverImage && (
-            <div className="w-full h-96 relative rounded-2xl overflow-hidden">
-              <Image
-                src={projectContent.coverImage}
-                alt={projectContent.title}
-                fill
-                className="object-cover"
-              />
-              <div className="absolute inset-0 bg-black/30 backdrop-blur-sm flex items-end p-6">
-                <div className="text-white">
-                  <h1 className="text-4xl font-bold mb-2 drop-shadow-md">
-                    {projectContent.title}
-                  </h1>
-                  <p className="max-w-xl text-sm opacity-90">
-                    {projectContent.description || "No description."}
-                  </p>
-                </div>
-              </div>
-            </div>
-          )}
+      <>
+        {/* Floating Navbar */}
+        <div className="fixed top-0 left-0 w-full bg-white/60 backdrop-blur-md z-50 px-6 py-4 border-b border-gray-300 flex justify-between items-center">
+          <Link href="/projects" className="text-sm font-semibold text-gray-800 hover:underline">
+            ← All Projects
+          </Link>
+          <div className="flex gap-4 items-center justify-center flex-1">
+            {adjacentProjects
+              .filter((p) => Math.abs(p.position) <= 1)
+              .map((project) => (
+                <Link
+                  key={project.slug}
+                  href={`/projects/${project.slug}`}
+                  className={`text-sm font-semibold px-4 py-2 rounded-full transition-all duration-300 ${
+                    project.slug === slug
+                      ? 'bg-gray-800 text-white'
+                      : 'bg-gray-200 hover:bg-gray-300 text-gray-700'
+                  }`}
+                >
+                  {project.content.title}
+                </Link>
+              ))}
+          </div>
         </div>
-
-        {/* 這裡用 Client Component */}
-        <PhotoGrid photos={matchingPhotos} />
-
-      </main>
+  
+        {/* Main cover slider with Swiper */}
+        <main className="pt-20 w-full py-10 max-w-7xl mx-auto overflow-hidden">
+          <CoverSlider projects={adjacentProjects} currentSlug={slug} />
+        </main>
+        <div className="px-4">
+          <PhotoGrid photos={matchingPhotos} />
+        </div>
+        
+      </>
     );
   } catch (err) {
     console.error("Error loading project detail:", err);
