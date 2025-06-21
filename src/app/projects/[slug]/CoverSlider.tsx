@@ -94,7 +94,7 @@ export default function CoverSlider({ projects, currentSlug }: CoverSliderProps)
                 }}
             >
                 <Link href={`/projects/${project.slug}`}>
-                <div style={{ position: 'relative', width: '100%', aspectRatio: '18 / 9' }}>
+                <div style={{ position: 'relative', width: '100%' }} className="responsive-aspect">
                     <Image
                     src={project.content.coverImage}
                     alt={project.content.title}

@@ -8,10 +8,6 @@
   z-index: 50 !important;         /* 確保浮在上層 */
 }
 
-
-
-
-
 .swiper-button-next {
   right: 0px !important;
 }
@@ -24,4 +20,20 @@
 .swiper-button-prev::after {
   font-size: 20px !important;     /* 箭頭圖示大小 */
   font-weight: bold;
+}
+
+.responsive-aspect {
+  aspect-ratio: 18 / 9;
+}
+
+@media (max-width: 640px) {
+  .responsive-aspect {
+    aspect-ratio: 36 / 21;
+  }
+}
+
+@media (max-width: 480px) {
+  .responsive-aspect {
+    aspect-ratio: 18 / 12;
+  }
 }
