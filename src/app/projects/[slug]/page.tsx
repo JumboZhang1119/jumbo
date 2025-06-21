@@ -44,19 +44,44 @@ export default async function ProjectDetailPage(context: { params: Promise<{ slu
     });
 
     // 找到同主題的其他專案 (theme tag 如 Theme:Kyoto)
-    const themeTag = projectTags.find((tag: string) => tag.toLowerCase().includes("theme"));
-    const themeTagPrefix = themeTag.split(":")[0]; // 取得 'Theme'
-    const themeProjects = allProjects.contents.filter(p =>
-      p.content.tags?.some((t: string) => t.startsWith(themeTagPrefix))
+    // const themeTag = projectTags.find((tag: string) => tag.toLowerCase().includes("theme"));
+    // const themeTagPrefix = themeTag.split(":")[0]; // 取得 'Theme'
+    // const themeProjects = allProjects.contents.filter(p =>
+    //   p.content.tags?.some((t: string) => t.startsWith(themeTagPrefix))
+    // );
+
+    // // 計算目前專案在主題清單中的 index，方便初始定位
+    // const currentIndex = themeProjects.findIndex(p => p.slug === slug);
+    // // 為方便傳入 CoverSlider，添加 position 欄位
+    // const adjacentProjects = themeProjects.map((p, idx) => ({
+    //   ...p,
+    //   position: idx - currentIndex,
+    // }));
+
+    // 自動判斷是 Theme 還是 Category
+    const tagType = projectTags.find((tag: string) =>
+      tag.toLowerCase().startsWith("theme:") || tag.toLowerCase().startsWith("category:")
     );
 
-    // 計算目前專案在主題清單中的 index，方便初始定位
-    const currentIndex = themeProjects.findIndex(p => p.slug === slug);
-    // 為方便傳入 CoverSlider，添加 position 欄位
-    const adjacentProjects = themeProjects.map((p, idx) => ({
+    // 如果找不到任何主題或分類 tag，直接 notFound
+    if (!tagType) return notFound();
+
+    const tagPrefix = tagType.split(":")[0]; // 'Theme' 或 'Category'
+
+    // 根據同一個主題或分類，取得相同 tag 的其他專案
+    const relatedProjects = allProjects.contents.filter(p =>
+      p.content.tags?.some((t: string) => t.startsWith(tagPrefix))
+    );
+
+    // 計算目前專案在這些相關專案中的位置
+    const currentIndex = relatedProjects.findIndex(p => p.slug === slug);
+
+    // 添加 position 欄位供 CoverSlider 使用
+    const adjacentProjects = relatedProjects.map((p, idx) => ({
       ...p,
       position: idx - currentIndex,
     }));
+
 
     return (
       <>
@@ -65,7 +90,7 @@ export default async function ProjectDetailPage(context: { params: Promise<{ slu
 
   
         {/* Main cover slider with Swiper */}
-        <main className="pt-20 w-full py-10 max-w-7xl mx-auto overflow-hidden">
+        <main className="pt-20 w-full py-10 overflow-hidden">
           <CoverSlider projects={adjacentProjects.map(p => ({
             slug: p.slug,
             content: {

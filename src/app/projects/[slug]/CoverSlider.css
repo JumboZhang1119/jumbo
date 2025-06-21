@@ -23,12 +23,18 @@
 }
 
 .responsive-aspect {
-  aspect-ratio: 18 / 9;
+  aspect-ratio: 24 / 12;
+}
+
+@media (max-width: 1280px) {
+  .responsive-aspect {
+    aspect-ratio: 22 / 12;
+  }
 }
 
 @media (max-width: 640px) {
   .responsive-aspect {
-    aspect-ratio: 36 / 21;
+    aspect-ratio: 20 / 12;
   }
 }
 

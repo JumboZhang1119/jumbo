@@ -56,10 +56,10 @@ export default function CoverSlider({ projects, currentSlug }: CoverSliderProps)
               slidesPerView: 1.3,  // sm breakpoint
             },
             1024: {
-              slidesPerView: 1.6,  // lg breakpoint
+              slidesPerView: 1.5,  // lg breakpoint
             },
             1280: {
-              slidesPerView: 1.6,  // xl breakpoint
+              slidesPerView: 1.7,  // xl breakpoint
             },
           }}
         centeredSlides={true}
