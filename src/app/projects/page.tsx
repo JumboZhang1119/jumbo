@@ -36,7 +36,7 @@ export default function ProjectsPageWrapper() {
       });
 
       setCategoryTags(Array.from(categorySet));
-      setThemeTags(['Theme:All', ...Array.from(themeSet)]);
+      setThemeTags(Array.from(themeSet));
     }
 
     fetchProjects();
@@ -87,14 +87,26 @@ export default function ProjectsPageWrapper() {
         </h1>
 
         {mode === 'theme' && (
-          <div className="mb-6 text-center">
-            <h2 className="text-base font-medium mb-2 text-gray-600">Select a Theme</h2>
-            <div className="flex flex-wrap justify-center gap-2">
+          <div className="mb-6 text-center flex items-center gap-4">
+            {/* 固定在左邊的 All 按鈕 */}
+            <button
+              onClick={() => handleFilter(null)} // 你可以用 null 或空字串來代表全部
+              className={`flex-shrink-0 cursor-pointer px-4 py-1.5 text-sm rounded-full transition-colors duration-200 whitespace-nowrap ${
+                activeTag === null
+                  ? 'bg-black text-white'
+                  : 'text-gray-600 hover:text-black bg-neutral-100'
+              }`}
+            >
+              All
+            </button>
+          
+            {/* 可滑動的 tag 按鈕群 */}
+            <div className="flex overflow-x-auto whitespace-nowrap gap-2 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200 flex-1">
               {themeTags.map((tag) => (
                 <button
                   key={tag}
                   onClick={() => handleFilter(tag)}
-                  className={`cursor-pointer px-4 py-1.5 text-sm rounded-full transition-colors duration-200 ${
+                  className={`inline-block cursor-pointer px-4 py-1.5 text-sm rounded-full transition-colors duration-200 whitespace-nowrap ${
                     tag === activeTag
                       ? 'bg-black text-white'
                       : 'text-gray-600 hover:text-black bg-neutral-100'
@@ -105,6 +117,8 @@ export default function ProjectsPageWrapper() {
               ))}
             </div>
           </div>
+        
+        
         )}
         <div className='pt-10'></div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
@@ -131,9 +145,11 @@ export default function ProjectsPageWrapper() {
                   <h2 className="text-lg font-semibold group-hover:text-black transition">
                     {project.content.title}
                   </h2>
-                  <p className="text-sm text-gray-600 mt-1 line-clamp-2">
-                    {project.content.description || 'No description'}
-                  </p>
+                  <div className="text-sm text-gray-600 mt-1 line-clamp-2">
+                    <div
+                      dangerouslySetInnerHTML={{ __html: project.content.description || "No description." }}
+                    />
+                  </div>
                 </div>
               </Link>
             </motion.div>

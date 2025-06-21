@@ -106,9 +106,11 @@ export default function CoverSlider({ projects, currentSlug }: CoverSliderProps)
                     <div className="absolute inset-0 bg-black/30 backdrop-blur-sm flex items-end p-6 rounded-xl">
                         <div className="text-white">
                         <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-2 drop-shadow-md">{project.content.title}</h1>
-                        <p className="text-xs sm:text-sm max-w-xl text-xs opacity-90">
-                            {project.content.description || 'No description.'}
-                        </p>
+                        <div className="text-xs sm:text-sm max-w-xl text-xs opacity-90">
+                            <div
+                                dangerouslySetInnerHTML={{ __html: project.content.description || "No description." }}
+                            />
+                        </div>
                         </div>
                     </div>
                     )}
