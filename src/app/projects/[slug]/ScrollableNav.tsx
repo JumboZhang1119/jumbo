@@ -30,7 +30,7 @@ export default function ScrollableNav({ adjacentProjects, slug }: ScrollableNavP
       </Link>
 
       <div
-        className={`flex-1 text-center text-xs sm:text-xl md:text-2xl font-bold text-gray-800 overflow-hidden whitespace-nowrap
+        className={`flex-1 text-center text-sm sm:text-xl md:text-2xl font-bold text-black overflow-hidden whitespace-nowrap
           transition-transform duration-700 ease-out
           ${animate ? "translate-x-0 opacity-100" : "translate-x-full opacity-0"}`}
       >
