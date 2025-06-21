@@ -6,6 +6,7 @@ import { getPhotographyProjects } from '@/lib/wisp';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import GlobalNavbar from "@/components/GlobalNavbar";
 
 const getResizedImage = (url: string, width: number) =>
   url.replace('/upload/', `/upload/w_${width}/`);
@@ -64,26 +65,30 @@ export default function ProjectsPageWrapper() {
   return (
     <main className="max-w-screen-xl mx-auto px-4 sm:px-8 py-10 font-sans">
       {/* Floating navbar */}
-      <div className="fixed top-0 left-0 w-full bg-white/45 backdrop-blur-md shadow z-50 py-4 px-6 flex justify-center gap-4 border-b border-gray-200">
-        {['category', 'theme'].map((type) => (
-          <button
-            key={type}
-            onClick={() => handleSelectMode(type as 'category' | 'theme')}
-            className={`cursor-pointer px-5 py-2 rounded-full text-sm font-semibold border border-white/0 transition-colors duration-200 ${
-              mode === type
-                ? 'text-black bg-gray-400/40 backdrop-blur-md border border-gray-500/50 shadow-sm'
-                : 'text-gray-500 hover:text-black hover:bg-gray-200/50 hover:backdrop-blur-md hover:border hover:border-gray-400/40'
-            }`}
-          >
-            {type.charAt(0).toUpperCase() + type.slice(1)}
-          </button>
-        ))}
-      </div>
+      <GlobalNavbar
+        middleSlot={
+          <div className="flex gap-2">
+            {['category', 'theme'].map((type) => (
+              <button
+                key={type}
+                onClick={() => handleSelectMode(type as 'category' | 'theme')}
+                className={`cursor-pointer px-4 py-1 rounded-full text-sm font-semibold border transition-all duration-200 ${
+                  mode === type
+                    ? 'text-black bg-gray-300 border-gray-500 shadow-sm'
+                    : 'text-gray-600 hover:text-black hover:bg-gray-200 border-transparent'
+                }`}
+              >
+                {type.charAt(0).toUpperCase() + type.slice(1)}
+              </button>
+            ))}
+          </div>
+        }
+      />
 
-      <div className="pt-28">
+      <div className="pt-20">
         {/* <h1 className="text-4xl font-bold mb-6 text-center tracking-tight">Photography Projects</h1> */}
         <h1 className="text-5xl sm:text-6xl font-medium mb-6 text-center tracking-wide" style={{ fontFamily: 'OneDay, sans-serif' }}>
-          PO-FENG Photography
+          Photography
         </h1>
 
         {mode === 'theme' && (
@@ -120,7 +125,8 @@ export default function ProjectsPageWrapper() {
         
         
         )}
-        <div className='pt-10'></div>
+        <div className={mode === 'theme' ? 'pt-5' : 'pt-8'}></div>
+
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {filteredProjects.map((project) => (
             <motion.div
