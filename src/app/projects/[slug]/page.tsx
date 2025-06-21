@@ -43,7 +43,7 @@ export default async function ProjectDetailPage(context: { params: Promise<{ slu
     });
 
     // 找到同主題的其他專案 (theme tag 如 Theme:Kyoto)
-    const themeTag = projectTags.find(tag => tag.toLowerCase().includes("theme"));
+    const themeTag = projectTags.find((tag: string) => tag.toLowerCase().includes("theme"));
     const themeTagPrefix = themeTag.split(":")[0]; // 取得 'Theme'
     const themeProjects = allProjects.contents.filter(p =>
       p.content.tags?.some((t: string) => t.startsWith(themeTagPrefix))
