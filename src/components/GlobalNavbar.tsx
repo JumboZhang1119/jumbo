@@ -28,7 +28,7 @@ export default function GlobalNavbar({ middleSlot }: GlobalNavbarProps) {
         </Link>
 
         {middleSlot && (
-          <div className="absolute left-1/2 transform -translate-x-1/2 hidden md:flex items-center z-0">
+          <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center z-0">
             {middleSlot}
           </div>
         )}
