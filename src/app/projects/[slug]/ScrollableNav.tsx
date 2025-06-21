@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import Link from "next/link";
 
 interface ScrollableNavProps {
   adjacentProjects: any[];
@@ -24,12 +25,12 @@ export default function ScrollableNav({ adjacentProjects, slug }: ScrollableNavP
       {/* <a href="/projects" className="text-[0.6rem] sm:text-sm font-semibold text-gray-800 hover:underline">
         ← All Projects
       </a> */}
-      <a
+      <Link
         href="/projects"
         className="text-xs sm:text-sm font-semibold text-gray-800 hover:underline"
         >
         ◀ <span className="hidden sm:inline">All Projects</span>
-      </a>
+      </Link>
 
       <div
         className={`flex-1 text-center text-xs sm:text-xl md:text-2xl font-bold text-gray-800 overflow-hidden whitespace-nowrap
