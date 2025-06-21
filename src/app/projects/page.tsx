@@ -16,7 +16,7 @@ export default function ProjectsPageWrapper() {
   const [categoryTags, setCategoryTags] = useState<string[]>([]);
   const [themeTags, setThemeTags] = useState<string[]>([]);
   const [mode, setMode] = useState<'category' | 'theme'>('theme');
-  const [activeTag, setActiveTag] = useState<string>('Theme:All');
+  const [activeTag, setActiveTag] = useState<string>('');
 
   useEffect(() => {
     async function fetchProjects() {
@@ -90,9 +90,9 @@ export default function ProjectsPageWrapper() {
           <div className="mb-6 text-center flex items-center gap-4">
             {/* 固定在左邊的 All 按鈕 */}
             <button
-              onClick={() => handleFilter(null)} // 你可以用 null 或空字串來代表全部
+              onClick={() => handleFilter('')} // 你可以用 null 或空字串來代表全部
               className={`flex-shrink-0 cursor-pointer px-4 py-1.5 text-sm rounded-full transition-colors duration-200 whitespace-nowrap ${
-                activeTag === null
+                activeTag === ''
                   ? 'bg-black text-white'
                   : 'text-gray-600 hover:text-black bg-neutral-100'
               }`}
