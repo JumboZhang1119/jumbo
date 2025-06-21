@@ -7,6 +7,7 @@ import PhotoGrid from "./PhotoGrid";
 import FloatingNavbar from "./FloatingNavbar";
 import Link from "next/link";
 import CoverSlider from './CoverSlider';
+import ScrollableNav from './ScrollableNav';
 
 export async function generateStaticParams(): Promise<{ slug: string }[]> {
   const result = await getPhotographyProjects();
@@ -60,28 +61,8 @@ export default async function ProjectDetailPage(context: { params: Promise<{ slu
     return (
       <>
         {/* Floating Navbar */}
-        <div className="fixed top-0 left-0 w-full bg-white/60 backdrop-blur-md z-50 px-6 py-4 border-b border-gray-300 flex justify-between items-center">
-          <Link href="/projects" className="text-sm font-semibold text-gray-800 hover:underline">
-            ← All Projects
-          </Link>
-          <div className="flex gap-4 items-center justify-center flex-1">
-            {adjacentProjects
-              .filter((p) => Math.abs(p.position) <= 1)
-              .map((project) => (
-                <Link
-                  key={project.slug}
-                  href={`/projects/${project.slug}`}
-                  className={`text-sm font-semibold px-4 py-2 rounded-full transition-all duration-300 ${
-                    project.slug === slug
-                      ? 'bg-gray-800 text-white'
-                      : 'bg-gray-200 hover:bg-gray-300 text-gray-700'
-                  }`}
-                >
-                  {project.content.title}
-                </Link>
-              ))}
-          </div>
-        </div>
+        <ScrollableNav adjacentProjects={adjacentProjects} slug={slug} />
+
   
         {/* Main cover slider with Swiper */}
         <main className="pt-20 w-full py-10 max-w-7xl mx-auto overflow-hidden">

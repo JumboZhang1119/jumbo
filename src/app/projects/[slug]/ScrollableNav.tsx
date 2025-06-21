@@ -1,0 +1,51 @@
+"use client";
+
+import React, { useEffect, useState } from "react";
+
+interface ScrollableNavProps {
+  adjacentProjects: any[];
+  slug: string;
+}
+
+export default function ScrollableNav({ adjacentProjects, slug }: ScrollableNavProps) {
+  const currentProject = adjacentProjects.find(p => p.slug === slug);
+  const currentTitle = currentProject?.content?.title || "";
+
+  const [animate, setAnimate] = useState(false);
+
+  useEffect(() => {
+    setAnimate(false);
+    const timeout = setTimeout(() => setAnimate(true), 100);
+    return () => clearTimeout(timeout);
+  }, [slug]);
+
+  return (
+    <div className="fixed top-0 left-0 w-full bg-white/60 backdrop-blur-md z-50 px-6 py-4 border-b border-gray-300 flex justify-between items-center">
+      {/* <a href="/projects" className="text-[0.6rem] sm:text-sm font-semibold text-gray-800 hover:underline">
+        ← All Projects
+      </a> */}
+      <a
+        href="/projects"
+        className="text-xs sm:text-sm font-semibold text-gray-800 hover:underline"
+        >
+        ◀ <span className="hidden sm:inline">All Projects</span>
+      </a>
+
+      <div
+        className={`flex-1 text-center text-xs sm:text-xl md:text-2xl font-bold text-gray-800 overflow-hidden whitespace-nowrap
+          transition-transform duration-700 ease-out
+          ${animate ? "translate-x-0 opacity-100" : "translate-x-full opacity-0"}`}
+      >
+        {currentTitle}
+      </div>
+
+
+      
+    <div
+        className="text-xs sm:text-sm font-semibold text-gray-800 invisible"
+        >
+        ◀ <span className="hidden invisible sm:inline ">All Projects</span>
+    </div>
+    </div>
+  );
+}

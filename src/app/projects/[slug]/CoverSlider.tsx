@@ -9,6 +9,8 @@ import { Navigation, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+import './CoverSlider.css';
+
 
 interface Project {
   slug: string;
@@ -45,7 +47,21 @@ export default function CoverSlider({ projects, currentSlug }: CoverSliderProps)
         initialSlide={activeIndex >= 0 ? activeIndex : 0}
         modules={[Navigation, Pagination]}
         spaceBetween={0}
-        slidesPerView={1.6}
+        // slidesPerView={1.6}
+        breakpoints={{
+            0: {
+              slidesPerView: 1.2,  // 最小螢幕（手機）
+            },
+            640: {
+              slidesPerView: 1.3,  // sm breakpoint
+            },
+            1024: {
+              slidesPerView: 1.6,  // lg breakpoint
+            },
+            1280: {
+              slidesPerView: 1.6,  // xl breakpoint
+            },
+          }}
         centeredSlides={true}
         navigation
         pagination={{ clickable: true }}
@@ -58,7 +74,7 @@ export default function CoverSlider({ projects, currentSlug }: CoverSliderProps)
             // 再跳轉路由（可加 setTimeout 延遲，讓用戶感受過渡）
             setTimeout(() => {
                 router.push(`/projects/${nextProject.slug}`);
-            }, 0); // 300ms 延遲，調整看需求
+            }, 300); // 300ms 延遲，調整看需求
             }
         }}
         style={{ paddingBottom: '3rem'}}
@@ -102,6 +118,31 @@ export default function CoverSlider({ projects, currentSlug }: CoverSliderProps)
             );
         })}
         </Swiper>
+        {/* 左右遮罩漸層 */}
+        {/* <div
+            style={{
+            pointerEvents: 'none', // 不影響滑鼠事件
+            position: 'absolute',
+            top: 0,
+            bottom: 0,
+            left: 0,
+            width: '6rem',
+            background: 'linear-gradient(to right, white, transparent)',
+            zIndex: 10,
+            }}
+        />
+        <div
+            style={{
+            pointerEvents: 'none',
+            position: 'absolute',
+            top: 0,
+            bottom: 0,
+            right: 0,
+            width: '6rem',
+            background: 'linear-gradient(to left, white, transparent)',
+            zIndex: 30,
+            }}
+        /> */}
     </div>
     
   );
