@@ -72,7 +72,7 @@ export default function ProjectsPageWrapper() {
               <button
                 key={type}
                 onClick={() => handleSelectMode(type as 'category' | 'theme')}
-                className={`cursor-pointer px-4 py-1 rounded-full text-xs sm:text-sm font-semibold border transition-all duration-200 ${
+                className={`cursor-pointer px-3 sm:px-4 py-1 rounded-full text-xs sm:text-sm font-semibold border transition-all duration-200 ${
                   mode === type
                     ? 'text-black bg-gray-300 border-gray-500 shadow-sm'
                     : 'text-gray-600 hover:text-black hover:bg-gray-200 border-transparent'
