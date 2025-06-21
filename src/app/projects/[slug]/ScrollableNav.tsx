@@ -22,12 +22,9 @@ export default function ScrollableNav({ adjacentProjects, slug }: ScrollableNavP
 
   return (
     <div className="fixed top-0 left-0 w-full bg-white/60 backdrop-blur-md z-50 px-6 py-4 border-b border-gray-300 flex justify-between items-center">
-      {/* <a href="/projects" className="text-[0.6rem] sm:text-sm font-semibold text-gray-800 hover:underline">
-        ← All Projects
-      </a> */}
       <Link
         href="/projects"
-        className="text-xs sm:text-sm font-semibold text-gray-800 hover:underline"
+        className="text-xs sm:text-sm font-semibold text-black hover:underline"
         >
         ◀ <span className="hidden sm:inline">All Projects</span>
       </Link>

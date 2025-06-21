@@ -69,7 +69,7 @@ export default function ProjectsPageWrapper() {
           <button
             key={type}
             onClick={() => handleSelectMode(type as 'category' | 'theme')}
-            className={`cursor-pointer px-5 py-2 rounded-full text-sm font-semibold transition-colors duration-200 ${
+            className={`cursor-pointer px-5 py-2 rounded-full text-sm font-semibold border border-white/0 transition-colors duration-200 ${
               mode === type
                 ? 'text-black bg-gray-400/40 backdrop-blur-md border border-gray-500/50 shadow-sm'
                 : 'text-gray-500 hover:text-black hover:bg-gray-200/50 hover:backdrop-blur-md hover:border hover:border-gray-400/40'
@@ -106,7 +106,7 @@ export default function ProjectsPageWrapper() {
             </div>
           </div>
         )}
-
+        <div className='pt-10'></div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {filteredProjects.map((project) => (
             <motion.div

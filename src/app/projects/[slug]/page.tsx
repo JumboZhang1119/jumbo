@@ -76,7 +76,7 @@ export default async function ProjectDetailPage(context: { params: Promise<{ slu
           }))} 
           currentSlug={slug} />
         </main>
-        <div className="px-4">
+        <div className="-mt-10 px-4">
           <PhotoGrid photos={matchingPhotos} />
         </div>
         
