@@ -85,7 +85,15 @@ export default async function ProjectDetailPage(context: { params: Promise<{ slu
   
         {/* Main cover slider with Swiper */}
         <main className="pt-20 w-full py-10 max-w-7xl mx-auto overflow-hidden">
-          <CoverSlider projects={adjacentProjects} currentSlug={slug} />
+          <CoverSlider projects={adjacentProjects.map(p => ({
+            slug: p.slug,
+            content: {
+              coverImage: p.content.coverImage,
+              title: p.content.title,
+              description: p.content.description,
+            },
+          }))} 
+          currentSlug={slug} />
         </main>
         <div className="px-4">
           <PhotoGrid photos={matchingPhotos} />
