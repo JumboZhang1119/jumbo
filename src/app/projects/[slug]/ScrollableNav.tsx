@@ -21,7 +21,7 @@ export default function ScrollableNav({ adjacentProjects, slug }: ScrollableNavP
   }, [slug]);
 
   return (
-    <div className="fixed top-0 left-0 w-full bg-white/60 backdrop-blur-md z-50 px-6 py-4 border-b border-gray-300 flex justify-between items-center">
+    <div className="fixed top-0 left-0 w-full bg-white/60 backdrop-blur-md z-50 px-6 py-3 border-b border-gray-300 flex justify-between items-center">
       <Link
         href="/projects"
         className="text-xs sm:text-sm font-semibold text-black hover:underline"
@@ -30,7 +30,7 @@ export default function ScrollableNav({ adjacentProjects, slug }: ScrollableNavP
       </Link>
 
       <div
-        className={`flex-1 text-center text-sm sm:text-xl md:text-2xl font-bold text-black overflow-hidden whitespace-nowrap
+        className={`flex-1 text-center text-lg sm:text-lg md:text-lg font-bold text-black overflow-hidden whitespace-nowrap
           transition-transform duration-700 ease-out
           ${animate ? "translate-x-0 opacity-100" : "translate-x-full opacity-0"}`}
       >

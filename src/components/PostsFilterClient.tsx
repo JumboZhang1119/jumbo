@@ -39,7 +39,7 @@ export default function PostsFilterClient({ posts }: { posts: Post[] }) {
 
   return (
     <>
-      <div className="mb-6 flex flex-wrap gap-2 justify-center">
+      <div className="mb-11 flex flex-wrap gap-2 justify-center">
         {allTags.map((tag) => (
           <button
             key={tag}
