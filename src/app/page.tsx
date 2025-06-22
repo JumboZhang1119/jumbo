@@ -15,10 +15,21 @@ export default async function Page() {
     tags: post.tags ?? [],
     image: post.image ?? undefined,
     description: post.description ?? undefined,
-    // publishedAt: post.publishedAt ? post.publishedAt.toISOString() : undefined,
-    // updatedAt: post.updatedAt ? post.updatedAt.toISOString() : undefined,
-    // createdAt: post.createdAt ? post.createdAt.toISOString() : undefined,
-    // tags: post.tags?.map(tag => typeof tag === 'string' ? tag : tag.name) ?? [],
+    publishedAt: typeof post.publishedAt === 'string'
+    ? post.publishedAt
+    : post.publishedAt instanceof Date
+    ? post.publishedAt.toISOString()
+    : undefined,
+  updatedAt: typeof post.updatedAt === 'string'
+    ? post.updatedAt
+    : post.updatedAt instanceof Date
+    ? post.updatedAt.toISOString()
+    : undefined,
+  createdAt: typeof post.createdAt === 'string'
+    ? post.createdAt
+    : post.createdAt instanceof Date
+    ? post.createdAt.toISOString()
+    : undefined,
   }));
 
   return (
