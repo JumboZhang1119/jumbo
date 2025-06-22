@@ -21,7 +21,7 @@ export default function GlobalNavbar({ middleSlot }: GlobalNavbarProps) {
 
   return (
     <nav className="fixed top-0 left-0 w-full z-50 bg-white/60 backdrop-blur border-b border-gray-200 shadow-sm">
-      <div className="max-w-screen-xl mx-auto flex justify-between items-center px-4 py-3 sm:px-6">
+      <div className="mx-auto flex justify-between items-center px-4 py-3 sm:px-6">
         {/* 左側 LOGO */}
         <Link href="/" className="font-bold text-lg">
           PO-FENG

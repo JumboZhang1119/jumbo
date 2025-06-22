@@ -32,3 +32,13 @@ export async function getPhotographyProjects() {
     return null;
   }
 }
+
+export async function getBlogPosts() {
+  const res = await wisp.getContents({
+    contentTypeSlug: 'blogPost',
+    limit: 100,
+    orderBy: '-publishedAt', // 最新優先
+  });
+
+  return res;
+}
