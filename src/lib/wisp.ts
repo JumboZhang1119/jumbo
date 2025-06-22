@@ -37,7 +37,11 @@ export async function getBlogPosts() {
   const res = await wisp.getContents({
     contentTypeSlug: 'blogPost',
     limit: 100,
-    orderBy: '-publishedAt', // 最新優先
+  });
+  res.contents.sort((a, b) => {
+    const dateA = new Date(a.publishedAt ?? a.createdAt ?? 0).getTime();
+    const dateB = new Date(b.publishedAt ?? b.createdAt ?? 0).getTime();
+    return dateB - dateA;
   });
 
   return res;
