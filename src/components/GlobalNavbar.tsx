@@ -12,6 +12,7 @@ interface GlobalNavbarProps {
 export default function GlobalNavbar({ middleSlot }: GlobalNavbarProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
+  const isBlogPath = pathname.startsWith('/blog');
 
   const navItems = [
     { label: 'Blog', href: '/' },
@@ -21,11 +22,22 @@ export default function GlobalNavbar({ middleSlot }: GlobalNavbarProps) {
 
   return (
     <nav className="fixed top-0 left-0 w-full z-50 bg-white/60 backdrop-blur border-b border-gray-200 shadow-sm">
-      <div className="mx-auto flex justify-between items-center px-4 py-3 sm:px-6">
+      <div className="mx-auto flex justify-between items-center px-5 py-3 sm:px-6">
         {/* 左側 LOGO */}
         <Link href="/" className="font-bold text-lg">
-          PO-FENG
-        </Link>
+        <span className="font-bold text-xl">
+          {isBlogPath ? (
+            <>
+              <span className="block sm:hidden">◀</span>
+              <span className="hidden sm:block">BLOG</span>
+            </>
+          ) : (
+            'PO-FENG'
+          )}
+        </span>
+      </Link>
+        
+
 
         {middleSlot && (
           <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center z-0">

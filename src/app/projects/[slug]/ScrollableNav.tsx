@@ -24,9 +24,9 @@ export default function ScrollableNav({ adjacentProjects, slug }: ScrollableNavP
     <div className="fixed top-0 left-0 w-full bg-white/60 backdrop-blur-md z-50 px-6 py-3 border-b border-gray-300 flex justify-between items-center">
       <Link
         href="/projects"
-        className="text-xs sm:text-sm font-semibold text-black hover:underline"
+        className="text-sm sm:text-gl font-semibold text-black hover:underline"
         >
-        ◀ <span className="hidden sm:inline">All Projects</span>
+        ◀ <span className="hidden ml-1 sm:inline sm:text-sm">All Projects</span>
       </Link>
 
       <div

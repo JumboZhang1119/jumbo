@@ -32,13 +32,13 @@ export default async function BlogPostPage({ params }: { params: Promise<Params>
       <main className="prose lg:prose-xl dark:prose-invert mx-auto pt-28 pb-20 px-4">
         <h1>{title}</h1>
         <div className="blog-content" dangerouslySetInnerHTML={{ __html: content }} />
-        <div className="mt-8 text-sm text-gray-500">
+        <div className="mt-8 text-sm text-gray-500 flex flex-wrap gap-x-3 gap-y-1">
           {tags.map((tag) => (
-            <span key={tag.id} className="mr-2">
-              #{tag.name}
+            <span key={tag.id}>
+              # {tag.name}
             </span>
           ))}
-          <div className="mt-2">{new Date(publishedAt || createdAt).toLocaleDateString()}</div>
+          <div className="w-full mt-2">{new Date(publishedAt || createdAt).toLocaleDateString()}</div>
         </div>
         <Footer />
       </main>
