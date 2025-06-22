@@ -52,7 +52,7 @@ const Page = async () => {
             className="rounded-full object-cover"
           />
         </div>
-        <div className="prose mb-5 lg:prose-lg dark:prose-invert mx-auto max-w-2xl text-center">
+        <div className="prose mb-5 dark:prose-invert mx-auto max-w-2xl text-center">
           <h1 className="text-4xl font-bbold mb-3">PO-FENG ZHANG</h1>
           <h1 className="text-2xl font-bbold mb-2">張柏豐</h1>
         </div>
@@ -65,8 +65,8 @@ const Page = async () => {
 
         <div className="mt-10 flex justify-center">
           <Image
-            src="https://imagedelivery.net/lLmNeOP7HXG0OqaG97wimw/clvlugru90000o4g8ahxp069s/6b080e65-2329-4a36-ad5c-0a6af8d9aeb1.png/public"
-            alt="Samantha Travel"
+            src="https://res.cloudinary.com/dvxhki7cj/image/upload/v1750592680/IMG_4061_1_lci1gs.jpg"
+            alt="Jumbo"
             width={640}
             height={360}
             className="rounded-xl object-cover"

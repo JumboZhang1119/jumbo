@@ -8,7 +8,6 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import GlobalNavbar from "@/components/GlobalNavbar";
 import { Footer } from "@/components/Footer";
-import Head from 'next/head';
 
 const getResizedImage = (url: string, width: number) =>
   url.replace('/upload/', `/upload/w_${width}/`);
@@ -65,14 +64,6 @@ export default function ProjectsPageWrapper() {
 
   return (
     <>
-      <Head>
-        <title>About MePP - Po-Feng's Blog</title>
-        <meta name="description" content="Learn more about Po-Feng and his photography journey." />
-        <meta property="og:title" content="About Me" />
-        <meta property="og:description" content="Learn more about Po-Feng and his photography journey." />
-        <meta property="og:type" content="website" />
-        <meta property="og:image" content="https://example.com/og-image.png" />
-      </Head>
       <main className="max-w-screen-xl mx-auto px-4 sm:px-8 py-10 font-sans">
         {/* Floating navbar */}
         <GlobalNavbar
