@@ -86,3 +86,8 @@
       @apply w-full;
     }
   }
+
+  body.modal-open {
+    overflow: hidden;
+    touch-action: none;
+  }
