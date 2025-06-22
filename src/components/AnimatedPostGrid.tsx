@@ -12,7 +12,7 @@ interface Post {
   description?: string;
   publishedAt?: string;
   updatedAt?: string;
-  tags?: string[];  // 新增 tags 欄位
+  tags?: (string | { id?: string; name?: string })[];  // 新增 tags 欄位
 }
 
 export default function AnimatedPostGrid({ posts }: { posts: Post[] }) {
@@ -60,20 +60,29 @@ export default function AnimatedPostGrid({ posts }: { posts: Post[] }) {
               {/* 新增 tags 顯示區塊 */}
               {post.tags && post.tags.length > 0 && (
                 <div className="mt-3 flex flex-wrap gap-2">
-                    {post.tags.map((tag) => (
-                    <span
-                        key={
-                          typeof tag === 'string' 
-                            ? tag 
-                            : tag.id ?? tag.name ?? JSON.stringify(tag)
-                        }
-                        className="text-xs px-2 py-0.5 rounded-full bg-gray-200 text-gray-700"
-                    >
-                        #{typeof tag === 'string' ? tag : tag.name ?? tag}
-                    </span>
-                    ))}
+                    {post.tags.map((tag) => {
+                    if (typeof tag === 'string') {
+                        return (
+                        <span key={tag} className="text-xs px-2 py-0.5 rounded-full bg-gray-200 text-gray-700">
+                            #{tag}
+                        </span>
+                        );
+                    } else {
+                        // 斷言 tag 是物件
+                        const tagObj = tag as { id?: string; name?: string };
+                        return (
+                        <span
+                            key={tagObj.id ?? tagObj.name ?? JSON.stringify(tagObj)}
+                            className="text-xs px-2 py-0.5 rounded-full bg-gray-200 text-gray-700"
+                        >
+                            #{tagObj.name ?? JSON.stringify(tagObj)}
+                        </span>
+                        );
+                    }
+                    })}
                 </div>
                 )}
+
 
             </div>
           </Link>
