@@ -62,10 +62,14 @@ export default function AnimatedPostGrid({ posts }: { posts: Post[] }) {
                 <div className="mt-3 flex flex-wrap gap-2">
                     {post.tags.map((tag) => (
                     <span
-                        key={tag.id ?? tag.name} // 確保有唯一 key
+                        key={
+                          typeof tag === 'string' 
+                            ? tag 
+                            : tag.id ?? tag.name ?? JSON.stringify(tag)
+                        }
                         className="text-xs px-2 py-0.5 rounded-full bg-gray-200 text-gray-700"
                     >
-                        #{tag.name ?? tag}
+                        #{typeof tag === 'string' ? tag : tag.name ?? tag}
                     </span>
                     ))}
                 </div>
