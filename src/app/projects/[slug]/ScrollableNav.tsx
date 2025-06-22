@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import { FaArrowLeft } from "react-icons/fa";
 
 interface ScrollableNavProps {
   adjacentProjects: any[];
@@ -24,10 +25,12 @@ export default function ScrollableNav({ adjacentProjects, slug }: ScrollableNavP
     <div className="fixed top-0 left-0 w-full bg-white/60 backdrop-blur-md z-50 px-6 py-3 border-b border-gray-300 flex justify-between items-center">
       <Link
         href="/projects"
-        className="text-sm sm:text-gl font-semibold text-black hover:underline"
-        >
-        ◀ <span className="hidden ml-1 sm:inline sm:text-sm">All Projects</span>
+        className="inline-flex items-center text-sm sm:text-lg font-semibold text-black hover:underline whitespace-nowrap"
+      >
+        <FaArrowLeft />
+        <span className="hidden sm:inline ml-1 sm:text-sm">All Projects</span>
       </Link>
+
 
       <div
         className={`flex-1 text-center text-lg sm:text-lg md:text-lg font-bold text-black overflow-hidden whitespace-nowrap

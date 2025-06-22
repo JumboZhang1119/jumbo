@@ -16,8 +16,9 @@ export const Providers = ({ children }: { children: React.ReactNode }) => {
   return (
     <NextThemeProvider
       attribute="class"
-      defaultTheme="system"
-      enableSystem
+      defaultTheme="light"
+      enableSystem={false}
+      themes={["light"]}
       disableTransitionOnChange
     >
       <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>

@@ -29,7 +29,7 @@ export default async function BlogPostPage({ params }: { params: Promise<Params>
         
       } 
       />
-      <main className="prose lg:prose-xl dark:prose-invert mx-auto pt-28 pb-20 px-4">
+      <main className="prose lg:prose-xl mx-auto pt-28 pb-20 px-4">
         <h1>{title}</h1>
         <div className="blog-content" dangerouslySetInnerHTML={{ __html: content }} />
         <div className="mt-8 text-sm text-gray-500 flex flex-wrap gap-x-3 gap-y-1">

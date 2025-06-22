@@ -4,7 +4,6 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Masonry from "react-masonry-css";
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 interface PhotoGridProps {
   photos: any[];
@@ -24,6 +23,8 @@ export default function PhotoGrid({ photos }: PhotoGridProps) {
   const [currentIndex, setCurrentIndex] = useState<number | null>(null);
   const [direction, setDirection] = useState<"left" | "right" | null>(null);
   const [isFirstOpen, setIsFirstOpen] = useState(true);
+  const [exitMode, setExitMode] = useState<"slide" | "scale">("slide");
+
 
   const touchStartY = useRef(0);
   const touchStartX = useRef(0);
@@ -45,6 +46,7 @@ export default function PhotoGrid({ photos }: PhotoGridProps) {
 
     if (deltaY > 50 && Math.abs(deltaY) > Math.abs(deltaX)) {
       // 觸發關閉動畫（不是直接隱藏）
+      setExitMode("scale");
       setIsClosing(true);
       return;
     }
@@ -78,12 +80,17 @@ export default function PhotoGrid({ photos }: PhotoGridProps) {
     if (isClosing) {
       setSelectedPhoto(null);
       setIsClosing(false);
+      setDirection(null);
+      setExitMode("slide");
     }
   }
 
   useEffect(() => {
     if (selectedPhoto) {
       document.body.classList.add("modal-open");
+      if (direction === null) {
+        setDirection(null);
+      }
     } else {
       document.body.classList.remove("modal-open");
       setIsClosing(false);
@@ -129,6 +136,8 @@ export default function PhotoGrid({ photos }: PhotoGridProps) {
               setSelectedPhoto(photo);
               setCurrentIndex(photos.findIndex(p => p.id === photo.id));
               setIsFirstOpen(true);
+              setDirection(null);
+              setExitMode("scale");
               }}
             >
               <Image
@@ -178,7 +187,10 @@ export default function PhotoGrid({ photos }: PhotoGridProps) {
             > 
               {/* Close Button */}
               <button
-                onClick={() => setSelectedPhoto(null)}
+                onClick={() => {
+                  setSelectedPhoto(null);
+                  setExitMode("scale");
+                }}
                 className="absolute top-4 right-4 
                   bg-gray-500 text-white rounded-full px-3 py-1 text-xs z-30
                   hover:bg-gray-800 active:scale-95 shadow-sm hover:shadow-md 
@@ -225,7 +237,7 @@ export default function PhotoGrid({ photos }: PhotoGridProps) {
                 initial={
                   isFirstOpen
                     ? { scale: 0.8, opacity: 0, x: 0, y: 0 }
-                    : { x: direction === "right" ? -150 : 150, y: 0, opacity: 0 }
+                    : { x: direction === "right" ? -200 : 200, y: 0, opacity: 0 }
                 }
                 animate={{
                   scale: 1,
@@ -234,11 +246,22 @@ export default function PhotoGrid({ photos }: PhotoGridProps) {
                   opacity: isClosing ? 0 : 1,
                 }}
                 exit={
-                  isFirstOpen
-                    ? { opacity: 0 }
-                    : { x: direction === "right" ? 150 : -150, y: isClosing ? 150 : 0, opacity: 0 }
+                  exitMode === "scale"
+                    ? { scale: 0.8, opacity: 0 }               // ✅ 關閉：縮小
+                    : direction === "right"
+                    ? { x: 200, opacity: 0 }                   // ⬅️ 往右滑出去
+                    : direction === "left"
+                    ? { x: -200, opacity: 0 }                  // ➡️ 往左滑出去
+                    : { opacity: 0 }
                 }
-                transition={{ duration: 0.3 }}
+                
+                
+                transition={{
+                  x: { duration: 0.4 },             // 左右滑動切換動畫時間：5 秒
+                  y: { duration: isClosing ? 0.3 : 0.3 },
+                  opacity: { duration: 0.25 },
+                  scale: { duration: 0.25 },
+                }}
                 onAnimationComplete={() => {
                   handleAnimationComplete();
                   if (isFirstOpen) setIsFirstOpen(false);  // 第一次動畫結束後設為 false

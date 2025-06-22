@@ -54,13 +54,13 @@ const Page = async () => {
             className="rounded-full object-cover"
           />
         </div>
-        <div className="prose mb-5 dark:prose-invert mx-auto max-w-2xl text-center">
+        <div className="prose mb-5 mx-auto max-w-2xl text-center">
           <h1 className="text-4xl font-bbold mb-3">PO-FENG ZHANG</h1>
           <h1 className="text-2xl font-bbold mb-2">張柏豐</h1>
         </div>
         <SocialLinks />
         <div className="mb-7"></div>
-        <div className="prose lg:prose-lg dark:prose-invert mx-auto max-w-2xl text-justify">
+        <div className="prose lg:prose-lg mx-auto max-w-2xl text-justify">
           <Markdown>{content}</Markdown>
         </div>
         
@@ -74,7 +74,10 @@ const Page = async () => {
             className="rounded-xl object-cover"
           />
         </div>
-        <Footer />
+        <div className="mx-auto max-w-2xl">
+          <Footer />
+        </div>
+        
         
       </div>
       

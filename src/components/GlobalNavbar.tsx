@@ -4,6 +4,8 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState, ReactNode } from 'react';
 import { HiOutlineMenuAlt3, HiOutlineX } from 'react-icons/hi';
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+
 
 interface GlobalNavbarProps {
   middleSlot?: ReactNode;
@@ -28,8 +30,11 @@ export default function GlobalNavbar({ middleSlot }: GlobalNavbarProps) {
         <span className="font-bold text-xl">
           {isBlogPath ? (
             <>
-              <span className="block sm:hidden">◀</span>
-              <span className="hidden sm:block">BLOG</span>
+              <span className="block text-sm sm:text-lg sm:hidden"><FaArrowLeft/></span>
+              <span className="hidden text-sm sm:text-lg sm:inline-flex items-center space-x-1">
+                <FaArrowLeft />
+                <span>BLOG</span>
+              </span>
             </>
           ) : (
             'PO-FENG'
