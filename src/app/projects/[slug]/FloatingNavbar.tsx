@@ -24,7 +24,7 @@ export default function FloatingNavbar({
       const tags = p.content.tags || [];
       return tags.some((t: string) => currentTags.includes(t));
     });
-  }, [allProjects, currentSlug]);
+  }, [allProjects, currentSlug, currentProject]);
 
   const currentIndex = relatedProjects.findIndex((p) => p.slug === currentSlug);
   const displayProjects = relatedProjects.slice(

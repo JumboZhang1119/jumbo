@@ -8,7 +8,7 @@ interface Params {
   slug: string;
 }
 
-export default async function BlogPost({ params }: { params: Params }) {
+export default async function BlogPost({ params }: { params: {slug: string}; }) {
   const result = await wisp.getPost(params.slug);
 
   if (!result.post) return notFound();
