@@ -16,20 +16,20 @@ export default async function Page() {
     image: post.image ?? undefined,
     description: post.description ?? undefined,
     publishedAt: typeof post.publishedAt === 'string'
-    ? post.publishedAt
-    : post.publishedAt instanceof Date
-    ? post.publishedAt.toISOString()
-    : undefined,
-  updatedAt: typeof post.updatedAt === 'string'
-    ? post.updatedAt
-    : post.updatedAt instanceof Date
-    ? post.updatedAt.toISOString()
-    : undefined,
-  createdAt: typeof post.createdAt === 'string'
-    ? post.createdAt
-    : post.createdAt instanceof Date
-    ? post.createdAt.toISOString()
-    : undefined,
+      ? post.publishedAt
+      : post.publishedAt instanceof Date
+      ? post.publishedAt.toISOString()
+      : undefined,
+    updatedAt: typeof post.updatedAt === 'string'
+      ? post.updatedAt
+      : post.updatedAt instanceof Date
+      ? post.updatedAt.toISOString()
+      : undefined,
+    createdAt: typeof post.createdAt === 'string'
+      ? post.createdAt
+      : post.createdAt instanceof Date
+      ? post.createdAt.toISOString()
+      : undefined,
   }));
 
   return (

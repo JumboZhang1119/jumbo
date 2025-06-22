@@ -48,9 +48,10 @@ export default function AnimatedPostGrid({ posts }: { posts: Post[] }) {
               </h2>
               <p className="text-sm text-gray-500 mb-1">
                 {(post.publishedAt || post.updatedAt) 
-                    ? new Date(post.publishedAt || post.updatedAt).toLocaleDateString() 
+                    ? new Date(post.publishedAt ?? post.updatedAt!).toLocaleDateString() 
                     : ''}
               </p>
+
 
               <p className="text-sm text-gray-600 mt-1 line-clamp-2">
                 {post.description ?? ''}
