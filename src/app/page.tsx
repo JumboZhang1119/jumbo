@@ -14,6 +14,7 @@ export default async function Page() {
     ...post,
     tags: post.tags ?? [],
     image: post.image ?? undefined,
+    description: post.description ?? undefined,
   }));
 
   return (
