@@ -24,12 +24,12 @@ export default function PhotoGrid({ photos }: PhotoGridProps) {
   const touchStartY = useRef(0);
 
   // 手指開始觸控，紀錄 Y 位置
-  function handleTouchStart(e) {
+  function handleTouchStart(e: React.TouchEvent<HTMLDivElement>) {
     touchStartY.current = e.touches[0].clientY;
   }
 
   // 手指離開時判斷滑動距離
-  function handleTouchEnd(e) {
+  function handleTouchEnd(e: React.TouchEvent<HTMLDivElement>) {
     const touchEndY = e.changedTouches[0].clientY;
     const deltaY = touchEndY - touchStartY.current;
 
@@ -52,7 +52,7 @@ export default function PhotoGrid({ photos }: PhotoGridProps) {
       document.body.classList.add("modal-open");
     } else {
       document.body.classList.remove("modal-open");
-      setIsClosing(false); // 確保重置狀態
+      setIsClosing(false);
     }
     return () => {
       document.body.classList.remove("modal-open");
