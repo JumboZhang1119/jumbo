@@ -15,6 +15,8 @@ export default async function Page() {
     tags: post.tags ?? [],
     image: post.image ?? undefined,
     description: post.description ?? undefined,
+    publishedAt: post.publishedAt ? post.publishedAt.toISOString() : undefined,
+    updatedAt: post.updatedAt ? post.updatedAt.toISOString() : undefined,
   }));
 
   return (
