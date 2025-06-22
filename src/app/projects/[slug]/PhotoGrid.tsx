@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Masonry from "react-masonry-css";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 interface PhotoGridProps {
   photos: any[];
@@ -175,6 +176,46 @@ export default function PhotoGrid({ photos }: PhotoGridProps) {
               className="relative z-10 w-full h-full flex flex-col"
               onClick={(e) => e.stopPropagation()}
             > 
+              {/* Close Button */}
+              <button
+                onClick={() => setSelectedPhoto(null)}
+                className="absolute top-4 right-4 
+                  bg-gray-500 text-white rounded-full px-3 py-1 text-xs z-30
+                  hover:bg-gray-800 active:scale-95 shadow-sm hover:shadow-md 
+                  transition-all duration-200"
+              >
+                Close ✕
+              </button>
+              {/* 左箭頭按鈕 */}
+              <button
+                onClick={() => {
+                  if (currentIndex !== null && currentIndex > 0) {
+                    setDirection("right");
+                    const newIndex = currentIndex - 1;
+                    setCurrentIndex(newIndex);
+                    setSelectedPhoto(photos[newIndex]);
+                  }
+                }}
+                className="absolute left-0 top-0 w-1/2 h-full z-20 bg-transparent"
+                aria-label="Previous image"
+              >
+              </button>
+
+              {/* 右箭頭按鈕 */}
+              <button
+                onClick={() => {
+                  if (currentIndex !== null && currentIndex < photos.length - 1) {
+                    setDirection("left");
+                    const newIndex = currentIndex + 1;
+                    setCurrentIndex(newIndex);
+                    setSelectedPhoto(photos[newIndex]);
+                  }
+                }}
+                className="absolute right-0 top-0 w-1/2 h-full z-20 bg-transparent"
+                aria-label="Next image"
+              >
+              </button>
+
               <div className="absolute top-4 left-4 bg-black/60 text-white px-2 py-1 rounded text-sm select-none z-20">
                 {currentIndex !== null ? `${currentIndex + 1} / ${photos.length}` : ""}
               </div>
@@ -228,16 +269,7 @@ export default function PhotoGrid({ photos }: PhotoGridProps) {
                   </div>
                 </div>
               </motion.div>
-              {/* Close Button */}
-              <button
-                onClick={() => setSelectedPhoto(null)}
-                className="absolute top-4 right-4 
-                  bg-gray-500 text-white rounded-full px-3 py-1 text-xs 
-                  hover:bg-gray-800 active:scale-95 shadow-sm hover:shadow-md 
-                  transition-all duration-200"
-              >
-                Close ✕
-              </button>
+              
             </motion.div>
           </motion.div>
         )}
