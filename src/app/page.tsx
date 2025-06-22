@@ -13,6 +13,7 @@ export default async function Page() {
   const postsWithTags = result.posts.map((post) => ({
     ...post,
     tags: post.tags ?? [],
+    image: post.image ?? undefined,
   }));
 
   return (
