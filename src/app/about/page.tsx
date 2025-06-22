@@ -1,58 +1,82 @@
-import { Footer } from "@/components/Footer";
-import { Header } from "@/components/Header";
-import { config } from "@/config";
-import { signOgImageUrl } from "@/lib/og-image";
+// app/about/page.tsx
+import Image from "next/image";
 import Markdown from "react-markdown";
+import { signOgImageUrl } from "@/lib/og-image";
+import { config } from "@/config";
+import GlobalNavbar from "@/components/GlobalNavbar";
+import { Footer } from "@/components/Footer";
+import SocialLinks from "@/components/SocialLinks";
 
-const content = `# About Me
+const content = `
 
-![Samantha](https://imagedelivery.net/lLmNeOP7HXG0OqaG97wimw/clvlugru90000o4g8ahxp069s/db7abbe3-aa5c-433e-a16d-cbf137d1c9e5.png/public)
+Hey there! I'm Samantha, a 28-year-old former corporate warrior who decided to ditch the 9-to-5 grind and embark on an adventure of a lifetime.  
+After years of hustling in a high-pressure job, I realized that life is too short to be stuck in an office, staring at spreadsheets all day.
 
-Hey there! I'm Samantha, a 28-year-old former corporate warrior who decided to ditch the 9-to-5 grind and embark on an adventure of a lifetime. After years of hustling in a high-pressure job, I realized that life is too short to be stuck in an office, staring at spreadsheets all day.
-
-So I took a leap of faith, quit my cushy job in Singapore, and decided to see the world on my own terms. No more stuffy meetings or rigid schedules – just me, my backpack, and an open road ahead.
-
-![Samantha](https://imagedelivery.net/lLmNeOP7HXG0OqaG97wimw/clvlugru90000o4g8ahxp069s/6b080e65-2329-4a36-ad5c-0a6af8d9aeb1.png/public)
-
-This blog is where I'll be documenting my travels, sharing my experiences, and hopefully inspiring others to follow their wanderlust. From trekking through remote villages to savoring local cuisines, I'm on a mission to immerse myself in different cultures and create memories that will last a lifetime.
-
-But this journey isn't just about checking off destinations from a bucket list. It's about self-discovery, personal growth, and finding the courage to live life on my own terms. I'll be honest and raw, sharing the highs and lows, the moments of pure bliss and the inevitable challenges that come with solo travel.
-
-So join me on this adventure, and let's explore the world together! Who knows, maybe my stories will inspire you to take that leap of faith and pursue your own dreams, whatever they may be.
+So I took a leap of faith, quit my cushy job in Singapore, and decided to see the world on my own terms.  
+This blog is where I'll be documenting my travels, sharing my experiences, and hopefully inspiring others to follow their wanderlust.
 
 Let's go on an adventure!
 
-Love,
-
-Samantha`;
+**Love,**  
+Samantha
+`;
 
 export async function generateMetadata() {
   return {
-    title: "About Me",
-    description: "Learn more about Samantha and her travel adventures",
+    title: {
+      absolute: "Po-Feng's Web", // 這樣就不會套用 `%s - Po-Feng's Website`
+    },
+    description: "This is a page about Po-Feng Zhang.",
     openGraph: {
-      title: "About Me",
-      description: "Learn more about Samantha and her travel adventures",
+      title: "Po-Feng's Web",
+      description: "This is a page about Po-Feng Zhang.",
       images: [
-        signOgImageUrl({
-          title: "Samantha",
-          label: "About Me",
-          brand: config.blog.name,
-        }),
+        "https://res.cloudinary.com/dvxhki7cj/image/upload/v1750587629/DSC01179_1_tx3da4.jpg",
       ],
     },
   };
 }
 
+
 const Page = async () => {
   return (
-    <div className="container mx-auto px-5">
-      <Header />
-      <div className="prose lg:prose-lg dark:prose-invert m-auto mt-20 mb-10 blog-content">
-        <Markdown>{content}</Markdown>
+    <>
+      <GlobalNavbar />
+      <div className="container mx-auto px-5 pt-[120px] pb-16">
+        <div className="mb-10 flex justify-center">
+          <Image
+            src="https://res.cloudinary.com/dvxhki7cj/image/upload/v1750587629/DSC01179_1_tx3da4.jpg"
+            alt="Jumbo Portrait"
+            width={250}
+            height={250}
+            className="rounded-full object-cover"
+          />
+        </div>
+        <div className="prose mb-5 lg:prose-lg dark:prose-invert mx-auto max-w-2xl text-center">
+          <h1 className="text-4xl font-bbold mb-3">PO-FENG ZHANG</h1>
+          <h1 className="text-2xl font-bbold mb-2">張柏豐</h1>
+        </div>
+        <SocialLinks />
+        <div className="mb-7"></div>
+        <div className="prose lg:prose-lg dark:prose-invert mx-auto max-w-2xl text-center">
+          <Markdown>{content}</Markdown>
+        </div>
+        
+
+        <div className="mt-10 flex justify-center">
+          <Image
+            src="https://imagedelivery.net/lLmNeOP7HXG0OqaG97wimw/clvlugru90000o4g8ahxp069s/6b080e65-2329-4a36-ad5c-0a6af8d9aeb1.png/public"
+            alt="Samantha Travel"
+            width={640}
+            height={360}
+            className="rounded-xl object-cover"
+          />
+        </div>
+        <Footer />
+        
       </div>
-      <Footer />
-    </div>
+      
+    </>
   );
 };
 

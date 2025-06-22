@@ -7,10 +7,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import GlobalNavbar from "@/components/GlobalNavbar";
+import { Footer } from "@/components/Footer";
+import Head from 'next/head';
 
 const getResizedImage = (url: string, width: number) =>
   url.replace('/upload/', `/upload/w_${width}/`);
-
 
 export default function ProjectsPageWrapper() {
   const [projects, setProjects] = useState<any[]>([]);
@@ -63,105 +64,117 @@ export default function ProjectsPageWrapper() {
   }, [projects, mode, activeTag]);
 
   return (
-    <main className="max-w-screen-xl mx-auto px-4 sm:px-8 py-10 font-sans">
-      {/* Floating navbar */}
-      <GlobalNavbar
-        middleSlot={
-          <div className="flex gap-2">
-            {['category', 'theme'].map((type) => (
-              <button
-                key={type}
-                onClick={() => handleSelectMode(type as 'category' | 'theme')}
-                className={`cursor-pointer px-3 sm:px-4 py-1 rounded-full text-xs sm:text-sm font-semibold border transition-all duration-200 ${
-                  mode === type
-                    ? 'text-black bg-gray-300 border-gray-500 shadow-sm'
-                    : 'text-gray-600 hover:text-black hover:bg-gray-200 border-transparent'
-                }`}
-              >
-                {type.charAt(0).toUpperCase() + type.slice(1)}
-              </button>
-            ))}
-          </div>
-        }
-      />
-
-      <div className="pt-20">
-        {/* <h1 className="text-4xl font-bold mb-6 text-center tracking-tight">Photography Projects</h1> */}
-        <h1 className="text-5xl sm:text-6xl font-medium mb-6 text-center tracking-wide" style={{ fontFamily: 'OneDay, sans-serif' }}>
-          Photography
-        </h1>
-
-        {mode === 'theme' && (
-          <div className="mb-6 text-center flex items-center gap-4">
-            {/* 固定在左邊的 All 按鈕 */}
-            <button
-              onClick={() => handleFilter('')} // 你可以用 null 或空字串來代表全部
-              className={`flex-shrink-0 cursor-pointer px-4 py-1.5 text-sm rounded-full transition-colors duration-200 whitespace-nowrap ${
-                activeTag === ''
-                  ? 'bg-black text-white'
-                  : 'text-gray-600 hover:text-black bg-neutral-100'
-              }`}
-            >
-              All
-            </button>
-          
-            {/* 可滑動的 tag 按鈕群 */}
-            <div className="flex overflow-x-auto whitespace-nowrap gap-2 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200 flex-1">
-              {themeTags.map((tag) => (
+    <>
+      <Head>
+        <title>About MePP - Po-Feng's Blog</title>
+        <meta name="description" content="Learn more about Po-Feng and his photography journey." />
+        <meta property="og:title" content="About Me" />
+        <meta property="og:description" content="Learn more about Po-Feng and his photography journey." />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://example.com/og-image.png" />
+      </Head>
+      <main className="max-w-screen-xl mx-auto px-4 sm:px-8 py-10 font-sans">
+        {/* Floating navbar */}
+        <GlobalNavbar
+          middleSlot={
+            <div className="flex gap-2">
+              {['category', 'theme'].map((type) => (
                 <button
-                  key={tag}
-                  onClick={() => handleFilter(tag)}
-                  className={`inline-block cursor-pointer px-4 py-1.5 text-sm rounded-full transition-colors duration-200 whitespace-nowrap ${
-                    tag === activeTag
-                      ? 'bg-black text-white'
-                      : 'text-gray-600 hover:text-black bg-neutral-100'
+                  key={type}
+                  onClick={() => handleSelectMode(type as 'category' | 'theme')}
+                  className={`cursor-pointer px-3 sm:px-4 py-1 rounded-full text-xs sm:text-sm font-semibold border transition-all duration-200 ${
+                    mode === type
+                      ? 'text-black bg-gray-300 border-gray-500 shadow-sm'
+                      : 'text-gray-600 hover:text-black hover:bg-gray-200 border-transparent'
                   }`}
                 >
-                  {tag.replace('Theme:', '')}
+                  {type.charAt(0).toUpperCase() + type.slice(1)}
                 </button>
               ))}
             </div>
-          </div>
-        
-        
-        )}
-        <div className={mode === 'theme' ? 'pt-5' : 'pt-8'}></div>
+          }
+        />
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          {filteredProjects.map((project) => (
-            <motion.div
-              key={project.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              <Link
-                href={`/projects/${project.slug}`}
-                className="group block rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300"
+        <div className="pt-20">
+          {/* <h1 className="text-4xl font-bold mb-6 text-center tracking-tight">Photography Projects</h1> */}
+          <h1 className="text-5xl sm:text-6xl font-medium mb-6 text-center tracking-wide" style={{ fontFamily: 'OneDay, sans-serif' }}>
+            Photography
+          </h1>
+
+          {mode === 'theme' && (
+            <div className="mb-6 text-center flex items-center gap-4">
+              {/* 固定在左邊的 All 按鈕 */}
+              <button
+                onClick={() => handleFilter('')} // 你可以用 null 或空字串來代表全部
+                className={`flex-shrink-0 cursor-pointer px-4 py-1.5 text-sm rounded-full transition-colors duration-200 whitespace-nowrap ${
+                  activeTag === ''
+                    ? 'bg-black text-white'
+                    : 'text-gray-600 hover:text-black bg-neutral-100'
+                }`}
               >
-                <div className="relative w-full h-64">
-                  <Image
-                    src={getResizedImage(project.content.coverImage, 1200)}
-                    alt={project.content.title}
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
-                <div className="p-4 bg-white">
-                  <h2 className="text-lg font-semibold group-hover:text-black transition">
-                    {project.content.title}
-                  </h2>
-                  <div className="text-sm text-gray-600 mt-1 line-clamp-2">
-                    <div
-                      dangerouslySetInnerHTML={{ __html: project.content.description || "No description." }}
+                All
+              </button>
+            
+              {/* 可滑動的 tag 按鈕群 */}
+              <div className="flex overflow-x-auto whitespace-nowrap gap-2 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200 flex-1">
+                {themeTags.map((tag) => (
+                  <button
+                    key={tag}
+                    onClick={() => handleFilter(tag)}
+                    className={`inline-block cursor-pointer px-4 py-1.5 text-sm rounded-full transition-colors duration-200 whitespace-nowrap ${
+                      tag === activeTag
+                        ? 'bg-black text-white'
+                        : 'text-gray-600 hover:text-black bg-neutral-100'
+                    }`}
+                  >
+                    {tag.replace('Theme:', '')}
+                  </button>
+                ))}
+              </div>
+            </div>
+          
+          
+          )}
+          <div className={mode === 'theme' ? 'pt-5' : 'pt-8'}></div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            {filteredProjects.map((project) => (
+              <motion.div
+                key={project.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <Link
+                  href={`/projects/${project.slug}`}
+                  className="group block rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300"
+                >
+                  <div className="relative w-full h-64">
+                    <Image
+                      src={getResizedImage(project.content.coverImage, 1200)}
+                      alt={project.content.title}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                   </div>
-                </div>
-              </Link>
-            </motion.div>
-          ))}
+                  <div className="p-4 bg-white">
+                    <h2 className="text-lg font-semibold group-hover:text-black transition">
+                      {project.content.title}
+                    </h2>
+                    <div className="text-sm text-gray-600 mt-1 line-clamp-2">
+                      <div
+                        dangerouslySetInnerHTML={{ __html: project.content.description || "No description." }}
+                      />
+                    </div>
+                  </div>
+                </Link>
+              </motion.div>
+            ))}
+          </div>
         </div>
-      </div>
-    </main>
+        <Footer />
+      </main>
+    </>
+    
   );
 }

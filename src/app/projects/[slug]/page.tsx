@@ -8,6 +8,9 @@ import FloatingNavbar from "./FloatingNavbar";
 import Link from "next/link";
 import CoverSlider from './CoverSlider';
 import ScrollableNav from './ScrollableNav';
+import { Footer } from "@/components/Footer";
+
+
 
 export async function generateStaticParams(): Promise<{ slug: string }[]> {
   const result = await getPhotographyProjects();
@@ -103,6 +106,7 @@ export default async function ProjectDetailPage(context: { params: Promise<{ slu
         </main>
         <div className="-mt-10 px-4">
           <PhotoGrid photos={matchingPhotos} />
+          <Footer />
         </div>
         
       </>
