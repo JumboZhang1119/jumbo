@@ -9,16 +9,18 @@ import SocialLinks from "@/components/SocialLinks";
 
 const content = `
 
-Hey there! I'm Samantha, a 28-year-old former corporate warrior who decided to ditch the 9-to-5 grind and embark on an adventure of a lifetime.  
-After years of hustling in a high-pressure job, I realized that life is too short to be stuck in an office, staring at spreadsheets all day.
+Hi, I’m **Jumbo**, an undergraduate student from Taiwan currently studying Electrical Engineering at National Yang Ming Chiao Tung University (NYCU).
 
-So I took a leap of faith, quit my cushy job in Singapore, and decided to see the world on my own terms.  
-This blog is where I'll be documenting my travels, sharing my experiences, and hopefully inspiring others to follow their wanderlust.
+I’m actively involved in academic research, with a current focus on LLMs, particularly in the area of MoE.
+Beyond machine learning, I have a strong interest in software development — both frontend and backend — and emerging technologies. I'm still exploring and learning on my own, and this website is actually my very first full-stack project. It's a space for me to document different aspects of my life: from what I’m learning and researching, to my journey in photography.
 
-Let's go on an adventure!
+**On Photography:**  
+Photography is a personal passion of mine. Although I’ve only been seriously into it for about two years, it has quickly become an essential part of how I experience and reflect on life. While I’m still learning photograpy skills, to me, is more than a hobby. It’s a way of preserving moments.
+Through the lens, I find joy in capturing the world around me — people, places, emotions. Every photo I take is a fragment of memory, and looking back at them often brings me right back to those moments. With this site, I hope to share not only my photos, but also the stories, experiments, and experiences that come with them.
 
-**Love,**  
-Samantha
+Thanks for stopping by, and I hope you enjoy your visit!
+
+— Jumbo
 `;
 
 export async function generateMetadata() {
@@ -58,7 +60,7 @@ const Page = async () => {
         </div>
         <SocialLinks />
         <div className="mb-7"></div>
-        <div className="prose lg:prose-lg dark:prose-invert mx-auto max-w-2xl text-center">
+        <div className="prose lg:prose-lg dark:prose-invert mx-auto max-w-2xl text-justify">
           <Markdown>{content}</Markdown>
         </div>
         
