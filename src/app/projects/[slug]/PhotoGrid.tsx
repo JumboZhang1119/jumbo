@@ -157,7 +157,7 @@ export default function PhotoGrid({ photos }: PhotoGridProps) {
             />
           </div>
           
-          <div className="w-full flex justify-center mt-1 mb-1">
+          <div className="w-full flex justify-center mt-1 mb-4">
             <div className="w-full max-w-[500px] flex justify-between gap-2 bg-black/60 text-white text-[10px] sm:text-xs px-3 py-1 rounded-md">
               <div className="flex-1 truncate text-left">
                 Camera: {selectedPhoto.content.cameraModel}
