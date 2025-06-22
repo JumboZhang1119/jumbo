@@ -50,28 +50,6 @@ export default function PhotoGrid({ photos }: PhotoGridProps) {
       setIsClosing(true);
       return;
     }
-
-    if (Math.abs(deltaX) > 50 && Math.abs(deltaX) > Math.abs(deltaY)) {
-      if (deltaX > 0) {
-        // 向右滑（上一張）
-        if (currentIndex !== null && currentIndex > 0) {
-          setDirection("right"); 
-          const newIndex = currentIndex - 1;
-          setCurrentIndex(newIndex);
-          setSelectedPhoto(photos[newIndex]);
-          setIsFirstOpen(false);
-        }
-      } else {
-        // 向左滑（下一張）
-        if (currentIndex !== null && currentIndex < photos.length - 1) {
-          setDirection("left"); 
-          const newIndex = currentIndex + 1;
-          setCurrentIndex(newIndex);
-          setSelectedPhoto(photos[newIndex]);
-          setIsFirstOpen(false);
-        }
-      }
-    }
     
   }
 
@@ -181,7 +159,7 @@ export default function PhotoGrid({ photos }: PhotoGridProps) {
             <motion.div
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1, transition: { duration: 0.3 } }}
-              exit={{ opacity: 0, transition: { duration: 0.15 } }}
+              exit={{ opacity: 0, transition: { duration: 0.3 } }}
               className="relative z-10 w-full h-full flex flex-col"
               onClick={(e) => e.stopPropagation()}
             > 
@@ -247,24 +225,23 @@ export default function PhotoGrid({ photos }: PhotoGridProps) {
                 }}
                 exit={
                   exitMode === "scale"
-                    ? { scale: 0.8, opacity: 0 }               // ✅ 關閉：縮小
+                    ? { scale: 0.8, opacity: 0 }           
                     : direction === "right"
-                    ? { x: 200, opacity: 0 }                   // ⬅️ 往右滑出去
+                    ? { x: 200, opacity: 0 }           
                     : direction === "left"
-                    ? { x: -200, opacity: 0 }                  // ➡️ 往左滑出去
+                    ? { x: -200, opacity: 0 }             
                     : { opacity: 0 }
                 }
                 
-                
                 transition={{
-                  x: { duration: 0.4 },             // 左右滑動切換動畫時間：5 秒
+                  x: { duration: 0.4 }, 
                   y: { duration: isClosing ? 0.3 : 0.3 },
-                  opacity: { duration: 0.25 },
-                  scale: { duration: 0.25 },
+                  opacity: { duration: 0.3 },
+                  scale: exitMode === "scale" ? { duration: 0.5 } : { duration: 0.25 },
                 }}
                 onAnimationComplete={() => {
                   handleAnimationComplete();
-                  if (isFirstOpen) setIsFirstOpen(false);  // 第一次動畫結束後設為 false
+                  if (isFirstOpen) setIsFirstOpen(false); 
                 }}
                 className="flex flex-col flex-1"
               >
