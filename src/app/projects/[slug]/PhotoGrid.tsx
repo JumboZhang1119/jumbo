@@ -140,12 +140,25 @@ export default function PhotoGrid({ photos }: PhotoGridProps) {
             {showMetadata && (
               <div className="p-4">
                 <div className="text-xs text-gray-400 space-y-0.5">
-                  <div className="flex gap-1 text-xs">
-                    <p>Camera: {photo.content.cameraModel} | </p>
-                    <p>Lens: {photo.content.lens}</p>
+                  <div className="flex gap-5 text-xs">
+                  <p>Camera: {photo.content.cameraModel}</p>
+                      {(() => {
+                        const match = photo.content.lens.match(/^(.+?)\s*\[([^\]]+)\]$/);
+                        const baseLens = match ? match[1] : photo.content.lens;
+                        return <p>Lens: {baseLens}</p>;
+                      })()}
                   </div>
                   <p>
-                    ƒ/{photo.content.aperture} · {photo.content.shutterSpeed}s · ISO {photo.content.iso}
+                  {(() => {
+                    const match = photo.content.lens.match(/^(.+?)\s*\[([^\]]+)\]$/);
+                    const focal = match ? match[2] : null;
+                    return (
+                      <>
+                        {focal && <>{focal} · </>}
+                        ƒ/{photo.content.aperture} · {photo.content.shutterSpeed}s · ISO {photo.content.iso}
+                      </>
+                    );
+                  })()}
                   </p>
                 </div>
               </div>
