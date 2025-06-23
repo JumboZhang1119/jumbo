@@ -102,7 +102,9 @@ export default function PhotoGrid({ photos }: PhotoGridProps) {
         className="flex gap-6"
         columnClassName="masonry-column"
       >
-        {photos.map((photo) => (
+        {[...photos] // 🔧 加入依照 publish 日期排序
+          .sort((a, b) => new Date(b.content.publish).getTime() - new Date(a.content.publish).getTime())
+          .map((photo) => (
           <motion.div
             key={photo.id}
             initial={{ opacity: 0, y: 30 }}
