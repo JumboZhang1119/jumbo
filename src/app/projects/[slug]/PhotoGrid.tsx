@@ -77,7 +77,7 @@ export default function PhotoGrid({ photos }: PhotoGridProps) {
     return () => {
       document.body.classList.remove("modal-open");
     };
-  }, [selectedPhoto]);
+  }, [selectedPhoto, direction]);
 
 
 
