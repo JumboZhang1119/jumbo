@@ -1,11 +1,8 @@
 import { wisp } from "@/lib/wisp";
-import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getPhotographyProjects } from "@/lib/wisp";
 import { getPhotoItemsByProjectTag } from "@/lib/photoItemApi";
 import PhotoGrid from "./PhotoGrid";
-import FloatingNavbar from "./FloatingNavbar";
-import Link from "next/link";
 import CoverSlider from './CoverSlider';
 import ScrollableNav from './ScrollableNav';
 import { Footer } from "@/components/Footer";
@@ -18,7 +15,10 @@ export async function generateStaticParams(): Promise<{ slug: string }[]> {
   return result.contents.map((project) => ({ slug: project.slug }));
 }
 
-export default async function ProjectDetailPage(context: { params: Promise<{ slug: string }> }) {
+export default async function ProjectDetailPage(context: {
+  params: Promise<{ slug: string }>;
+  searchParams?: { [key: string]: string | string[] | undefined };
+}) {
   const params = await context.params;
   const slug = params.slug;
 
@@ -46,21 +46,6 @@ export default async function ProjectDetailPage(context: { params: Promise<{ slu
       return tags.some((t: string) => projectTags.includes(t));
     });
 
-    // 找到同主題的其他專案 (theme tag 如 Theme:Kyoto)
-    // const themeTag = projectTags.find((tag: string) => tag.toLowerCase().includes("theme"));
-    // const themeTagPrefix = themeTag.split(":")[0]; // 取得 'Theme'
-    // const themeProjects = allProjects.contents.filter(p =>
-    //   p.content.tags?.some((t: string) => t.startsWith(themeTagPrefix))
-    // );
-
-    // // 計算目前專案在主題清單中的 index，方便初始定位
-    // const currentIndex = themeProjects.findIndex(p => p.slug === slug);
-    // // 為方便傳入 CoverSlider，添加 position 欄位
-    // const adjacentProjects = themeProjects.map((p, idx) => ({
-    //   ...p,
-    //   position: idx - currentIndex,
-    // }));
-
     // 自動判斷是 Theme 還是 Category
     const tagType = projectTags.find((tag: string) =>
       tag.toLowerCase().startsWith("theme:") || tag.toLowerCase().startsWith("category:")
@@ -84,7 +69,6 @@ export default async function ProjectDetailPage(context: { params: Promise<{ slu
       ...p,
       position: idx - currentIndex,
     }));
-
 
     return (
       <>

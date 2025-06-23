@@ -17,6 +17,7 @@ const breakpointColumnsObj = {
 };
 
 export default function PhotoGrid({ photos }: PhotoGridProps) {
+  
   const [showMetadata, setShowMetadata] = useState(false);
   const [selectedPhoto, setSelectedPhoto] = useState<any | null>(null);
   const [isClosing, setIsClosing] = useState(false);
@@ -78,6 +79,8 @@ export default function PhotoGrid({ photos }: PhotoGridProps) {
     };
   }, [selectedPhoto]);
 
+
+
   return (
     <>
       <div className="flex justify-end mb-4">
@@ -102,8 +105,15 @@ export default function PhotoGrid({ photos }: PhotoGridProps) {
         className="flex gap-6"
         columnClassName="masonry-column"
       >
-        {[...photos] // 🔧 加入依照 publish 日期排序
-          .sort((a, b) => new Date(b.content.publish).getTime() - new Date(a.content.publish).getTime())
+        {[...photos]
+          .sort((a, b) => {
+            const publishDiff = new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime();
+            if (publishDiff !== 0) return publishDiff;
+            const extractNumber = (slug: string) => parseInt(slug.slice(3, 8).match(/\d+/)?.[0] ?? "0", 10);
+            const numA = extractNumber(a.slug);
+            const numB = extractNumber(b.slug);
+            return numB - numA; 
+          })
           .map((photo) => (
           <motion.div
             key={photo.id}

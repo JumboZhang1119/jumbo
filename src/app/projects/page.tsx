@@ -5,6 +5,7 @@ import { useEffect, useState, useMemo } from 'react';
 import { getPhotographyProjects } from '@/lib/wisp';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useSearchParams, useRouter } from "next/navigation";
 import { motion } from 'framer-motion';
 import GlobalNavbar from "@/components/GlobalNavbar";
 import { Footer } from "@/components/Footer";
@@ -16,8 +17,13 @@ export default function ProjectsPageWrapper() {
   const [projects, setProjects] = useState<any[]>([]);
   const [categoryTags, setCategoryTags] = useState<string[]>([]);
   const [themeTags, setThemeTags] = useState<string[]>([]);
-  const [mode, setMode] = useState<'category' | 'theme'>('category');
-  const [activeTag, setActiveTag] = useState<string>('');
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const modeParam = searchParams.get('mode') || 'category';
+  const activeTagParam = searchParams.get('activeTag') || '';
+  const [mode, setMode] = useState<'category' | 'theme'>(modeParam as 'category' | 'theme');
+  const [activeTag, setActiveTag] = useState(activeTagParam);
+  
 
   useEffect(() => {
     async function fetchProjects() {
@@ -43,13 +49,21 @@ export default function ProjectsPageWrapper() {
     fetchProjects();
   }, []);
 
+  useEffect(() => {
+    setMode(modeParam as 'category' | 'theme');
+    setActiveTag(activeTagParam);
+  }, [modeParam, activeTagParam]);
+
   const handleSelectMode = (selected: 'category' | 'theme') => {
     setMode(selected);
-    setActiveTag(selected === 'theme' ? 'Theme:All' : '');
+    const newActiveTag = selected === 'theme' ? 'Theme:All' : '';
+    setActiveTag(newActiveTag);
+    router.push(`/projects?mode=${selected}&activeTag=${encodeURIComponent(newActiveTag)}`);
   };
 
   const handleFilter = (tag: string) => {
     setActiveTag(tag);
+    router.push(`/projects?mode=${mode}&activeTag=${encodeURIComponent(tag)}`);
   };
 
   const filteredProjects = useMemo(() => {
