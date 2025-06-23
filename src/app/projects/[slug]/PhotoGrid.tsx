@@ -140,8 +140,8 @@ export default function PhotoGrid({ photos }: PhotoGridProps) {
             {showMetadata && (
               <div className="p-4">
                 <div className="text-xs text-gray-400 space-y-0.5">
-                  <div className="flex gap-8 text-xs">
-                    <p>Camera: {photo.content.cameraModel}</p>
+                  <div className="flex gap-1 text-xs">
+                    <p>Camera: {photo.content.cameraModel} | </p>
                     <p>Lens: {photo.content.lens}</p>
                   </div>
                   <p>
