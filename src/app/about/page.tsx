@@ -1,8 +1,6 @@
 // app/about/page.tsx
 import Image from "next/image";
 import Markdown from "react-markdown";
-import { signOgImageUrl } from "@/lib/og-image";
-import { config } from "@/config";
 import GlobalNavbar from "@/components/GlobalNavbar";
 import { Footer } from "@/components/Footer";
 import SocialLinks from "@/components/SocialLinks";
@@ -26,7 +24,7 @@ Thanks for stopping by, and I hope you enjoy your visit!
 export async function generateMetadata() {
   return {
     title: {
-      absolute: "Po-Feng's Web", // 這樣就不會套用 `%s - Po-Feng's Website`
+      absolute: "Po-Feng's Web", 
     },
     description: "This is a page about Po-Feng Zhang.",
     openGraph: {
