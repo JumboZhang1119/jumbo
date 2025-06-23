@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { FaArrowLeft } from "react-icons/fa";
-import { useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 interface ScrollableNavProps {
   adjacentProjects: any[];
@@ -11,7 +11,10 @@ interface ScrollableNavProps {
 }
 
 export default function ScrollableNav({ adjacentProjects, slug }: ScrollableNavProps) {
-  const router = useRouter();
+
+  const searchParams = useSearchParams();
+  const mode = searchParams.get("mode") || "category";
+  const activeTag = searchParams.get("activeTag") || "";
 
   const currentProject = adjacentProjects.find(p => p.slug === slug);
   const currentTitle = currentProject?.content?.title || "";
@@ -27,13 +30,13 @@ export default function ScrollableNav({ adjacentProjects, slug }: ScrollableNavP
 
   return (
     <div className="fixed top-0 left-0 w-full bg-white/60 backdrop-blur-md z-50 px-6 py-3 border-b border-gray-300 flex justify-between items-center">
-      <button
-        onClick={() => router.back()}
+      <Link
+        href={`/projects?mode=${mode}&activeTag=${encodeURIComponent(activeTag)}`}
         className="inline-flex items-center text-sm sm:text-lg font-semibold text-black hover:underline whitespace-nowrap"
       >
         <FaArrowLeft />
         <span className="hidden sm:inline ml-1 sm:text-sm">All Projects</span>
-      </button>
+      </Link>
 
 
       <div
