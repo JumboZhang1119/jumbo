@@ -16,7 +16,7 @@ export default function ProjectsPageWrapper() {
   const [projects, setProjects] = useState<any[]>([]);
   const [categoryTags, setCategoryTags] = useState<string[]>([]);
   const [themeTags, setThemeTags] = useState<string[]>([]);
-  const [mode, setMode] = useState<'category' | 'theme'>('theme');
+  const [mode, setMode] = useState<'category' | 'theme'>('category');
   const [activeTag, setActiveTag] = useState<string>('');
 
   useEffect(() => {
