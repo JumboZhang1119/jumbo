@@ -79,6 +79,13 @@ export default function PhotoGrid({ photos }: PhotoGridProps) {
     };
   }, [selectedPhoto, direction]);
 
+  const sortedPhotos = [...photos].sort((a, b) => {
+    const publishDiff = new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime();
+    if (publishDiff !== 0) return publishDiff;
+    const extractNumber = (slug: string) => parseInt(slug.slice(3, 8).match(/\d+/)?.[0] ?? "0", 10);
+    return extractNumber(b.slug) - extractNumber(a.slug);
+  });
+
 
 
   return (
@@ -105,16 +112,7 @@ export default function PhotoGrid({ photos }: PhotoGridProps) {
         className="flex gap-6"
         columnClassName="masonry-column"
       >
-        {[...photos]
-          .sort((a, b) => {
-            const publishDiff = new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime();
-            if (publishDiff !== 0) return publishDiff;
-            const extractNumber = (slug: string) => parseInt(slug.slice(3, 8).match(/\d+/)?.[0] ?? "0", 10);
-            const numA = extractNumber(a.slug);
-            const numB = extractNumber(b.slug);
-            return numB - numA; 
-          })
-          .map((photo) => (
+        {sortedPhotos.map((photo) => (
           <motion.div
             key={photo.id}
             initial={{ opacity: 0, y: 30 }}
@@ -124,7 +122,7 @@ export default function PhotoGrid({ photos }: PhotoGridProps) {
           >
             <div className="relative w-full cursor-pointer" onClick={() => {
               setSelectedPhoto(photo);
-              setCurrentIndex(photos.findIndex(p => p.id === photo.id));
+              setCurrentIndex(sortedPhotos.findIndex(p => p.id === photo.id));
               setIsFirstOpen(true);
               setDirection(null);
               setExitMode("scale");
@@ -195,7 +193,7 @@ export default function PhotoGrid({ photos }: PhotoGridProps) {
                     setDirection("right");
                     const newIndex = currentIndex - 1;
                     setCurrentIndex(newIndex);
-                    setSelectedPhoto(photos[newIndex]);
+                    setSelectedPhoto(sortedPhotos[newIndex]);
                   }
                 }}
                 className="absolute left-0 top-0 w-1/2 h-full z-20 bg-transparent"
@@ -206,11 +204,11 @@ export default function PhotoGrid({ photos }: PhotoGridProps) {
               {/* 右箭頭按鈕 */}
               <button
                 onClick={() => {
-                  if (currentIndex !== null && currentIndex < photos.length - 1) {
+                  if (currentIndex !== null && currentIndex < sortedPhotos.length - 1) {
                     setDirection("left");
                     const newIndex = currentIndex + 1;
                     setCurrentIndex(newIndex);
-                    setSelectedPhoto(photos[newIndex]);
+                    setSelectedPhoto(sortedPhotos[newIndex]);
                   }
                 }}
                 className="absolute right-0 top-0 w-1/2 h-full z-20 bg-transparent"
@@ -219,7 +217,7 @@ export default function PhotoGrid({ photos }: PhotoGridProps) {
               </button>
 
               <div className="absolute top-4 left-4 bg-black/60 text-white px-2 py-1 rounded text-sm select-none z-20">
-                {currentIndex !== null ? `${currentIndex + 1} / ${photos.length}` : ""}
+                {currentIndex !== null ? `${currentIndex + 1} / ${sortedPhotos.length}` : ""}
               </div>
               {/* Inner */}
               <motion.div
