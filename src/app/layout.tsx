@@ -16,6 +16,8 @@ export const metadata: Metadata = {
   },
   description: config.blog.metadata.description,
   openGraph: {
+    type: "website",
+    url: process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000",
     title: config.blog.metadata.title.default,
     description: config.blog.metadata.description,
     images: [
