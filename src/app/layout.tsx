@@ -19,9 +19,12 @@ export const metadata: Metadata = {
     title: config.blog.metadata.title.default,
     description: config.blog.metadata.description,
     images: [
-      signOgImageUrl({
-        title: config.blog.name,
-      }),
+      {
+        url: "https://res.cloudinary.com/dvxhki7cj/image/upload/v1750700064/DSC01685_pkm0sy.jpg",
+        width: 1200,
+        height: 800,
+        alt: "Cover Image",
+      },
     ],
   },
 };

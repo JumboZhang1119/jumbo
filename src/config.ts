@@ -34,9 +34,6 @@ const buildConfig = () => {
         },
       },
     },
-    ogImageSecret:
-      process.env.OG_IMAGE_SECRET ||
-      "secret_used_for_signing_and_verifying_the_og_image_url",
     wisp: {
       blogId,
     },
