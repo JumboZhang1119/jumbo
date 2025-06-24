@@ -15,6 +15,8 @@ const buildConfig = () => {
       metadata: {
         title: {
           absolute: defaultTitle,
+          default: defaultTitle,
+          template: defaultTitle,
         },
         description: defaultDescription,
         openGraph: {
