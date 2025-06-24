@@ -9,6 +9,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { motion } from 'framer-motion';
 import GlobalNavbar from "@/components/GlobalNavbar";
 import { Footer } from "@/components/Footer";
+import Head from 'next/head';
 
 const getResizedImage = (url: string, width: number) =>
   url.replace('/upload/', `/upload/w_${width}/`);
@@ -78,6 +79,13 @@ export default function ProjectsPageWrapper() {
 
   return (
     <>
+      <Head>
+        <title>Photography Projects | Your Site Name</title>
+        <meta property="og:title" content="Photography Projects" />
+        <meta property="og:description" content="A curated collection of photography projects." />
+        <meta property="og:image" content="https://res.cloudinary.com/dvxhki7cj/image/upload/v1750700064/DSC01685_pkm0sy.jpg" />
+        <meta property="og:type" content="website" />
+      </Head>
       <main className="max-w-screen-xl mx-auto px-4 sm:px-8 py-10 font-sans">
         {/* Floating navbar */}
         <GlobalNavbar
