@@ -125,7 +125,7 @@ export default function PhotoGrid({ photos }: PhotoGridProps) {
               setCurrentIndex(sortedPhotos.findIndex(p => p.id === photo.id));
               setIsFirstOpen(true);
               setDirection(null);
-              setExitMode("scale"); 
+              setExitMode("scale");
               }}
             >
               <Image
