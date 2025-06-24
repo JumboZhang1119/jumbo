@@ -15,10 +15,21 @@ const buildConfig = () => {
       metadata: {
         title: {
           absolute: defaultTitle,
-          default: defaultTitle,
-          template: `%s - ${defaultTitle}`,
         },
         description: defaultDescription,
+        openGraph: {
+          title: "PO-FENG Photography",
+          description: "Explore a curated selection of themed photography projects.",
+          url: process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000",
+          images: [
+            {
+              url: "https://res.cloudinary.com/dvxhki7cj/image/upload/v1750700064/DSC01685_pkm0sy.jpg",
+              width: 1200,
+              height: 800,
+              alt: "Photography Cover",
+            },
+          ],
+        },
       },
     },
     ogImageSecret:
