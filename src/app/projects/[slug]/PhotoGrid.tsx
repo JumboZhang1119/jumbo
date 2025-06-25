@@ -131,7 +131,7 @@ export default function PhotoGrid({ photos }: PhotoGridProps) {
               <Image
                 src={photo.content.image}
                 alt={photo.content.title}
-                width={photo.content.width || 800}   // 建議你在 wisp 資料裡補充圖片寬高
+                width={photo.content.width || 800}   // 建議你在 wisp 資料裡補充圖片寬高 
                 height={photo.content.height || 600}
                 className="rounded-lg w-full h-auto object-cover"
               />
