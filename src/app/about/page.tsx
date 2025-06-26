@@ -26,10 +26,10 @@ export async function generateMetadata() {
     title: {
       absolute: "Po-Feng's Web", 
     },
-    description: "This is a page about Po-Feng Zhang.",
+    description: "This is a page about Po-Feng Chang.",
     openGraph: {
       title: "Po-Feng's Web",
-      description: "This is a page about Po-Feng Zhang.",
+      description: "This is a page about Po-Feng Chang.",
       images: [
         "https://res.cloudinary.com/dvxhki7cj/image/upload/v1750587629/DSC01179_1_tx3da4.jpg",
       ],
