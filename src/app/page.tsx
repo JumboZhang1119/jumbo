@@ -9,7 +9,6 @@ export default async function Page() {
   const projects = projectData?.contents ?? [];
   const result = await wisp.getPosts({ limit: 50 });
 
-  // 把 tags 也準備好（讓 client component 用）
   const postsWithTags = result.posts.map((post) => ({
     ...post,
     tags: post.tags ?? [],
@@ -43,7 +42,6 @@ export default async function Page() {
           Blog
         </h1>
 
-        {/* 將 posts 傳給 client component，交給它做篩選顯示 */}
         <PostsFilterClient posts={postsWithTags} />
 
         <Footer />

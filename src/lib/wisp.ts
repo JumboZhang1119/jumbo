@@ -11,15 +11,6 @@ export const wisp = buildWispClient({
 
 export type { GetPostsResult, GetPostResult };
 
-// export async function getPhotographyProjects() {
-//   const res = await wisp.getContent({
-//     contentTypeSlug: "photographyProject",
-//     contentSlug: "tpac"
-//   });
-//   console.log("Wisp photographyProject data:", res);
-//   return res;
-// }
-
 export async function getPhotographyProjects() {
   try {
     const res = await wisp.getContents({

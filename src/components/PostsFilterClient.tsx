@@ -7,11 +7,11 @@ interface Post {
   id: string;
   slug: string;
   title: string;
-  image?: string | null;  // 允許 image 為 null
+  image?: string | null;
   description?: string;
   publishedAt?: string;
   updatedAt?: string;
-  tags?: (string | { id?: string; name?: string })[];  // 新增 tags 欄位
+  tags?: (string | { id?: string; name?: string })[];
 }
 
 export default function PostsFilterClient({ posts }: { posts: Post[] }) {

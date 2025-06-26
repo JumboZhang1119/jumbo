@@ -4,7 +4,7 @@ export async function getPhotoItemsByProjectTag(projectTag: string) {
   try {
     const result = await wisp.getContents({
         contentTypeSlug: "photoItem",
-        limit: "all", // 一次取出所有，然後前端過濾
+        limit: "all", 
     });
     
     const filtered = result.contents?.filter(photo =>

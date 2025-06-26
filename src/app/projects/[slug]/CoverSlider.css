@@ -1,11 +1,11 @@
 .swiper-button-next,
 .swiper-button-prev {
-  color: black !important;        /* 箭頭顏色 */
-  width: 40px !important;         /* 自訂寬高 */
+  color: black !important;   
+  width: 40px !important;     
   height: 40px !important;
-  top: 50% !important;            /* 垂直置中 */
+  top: 50% !important;         
   transform: translateY(-50%) !important;
-  z-index: 50 !important;         /* 確保浮在上層 */
+  z-index: 50 !important;       
 }
 
 .swiper-button-next {
@@ -18,7 +18,7 @@
 
 .swiper-button-next::after,
 .swiper-button-prev::after {
-  font-size: 20px !important;     /* 箭頭圖示大小 */
+  font-size: 20px !important;   
   font-weight: bold;
 }
 

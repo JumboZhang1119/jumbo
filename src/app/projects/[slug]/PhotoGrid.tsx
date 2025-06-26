@@ -30,13 +30,11 @@ export default function PhotoGrid({ photos }: PhotoGridProps) {
   const touchStartY = useRef(0);
   const touchStartX = useRef(0);
 
-  // 手指開始觸控，紀錄 Y 位置
   function handleTouchStart(e: React.TouchEvent<HTMLDivElement>) {
     touchStartY.current = e.touches[0].clientY;
     touchStartX.current = e.touches[0].clientX;
   }
 
-  // 手指離開時判斷滑動距離
   function handleTouchEnd(e: React.TouchEvent<HTMLDivElement>) {
     if (isClosing) return;
 
@@ -46,7 +44,6 @@ export default function PhotoGrid({ photos }: PhotoGridProps) {
     const deltaX = touchEndX - touchStartX.current;
 
     if (deltaY > 50 && Math.abs(deltaY) > Math.abs(deltaX)) {
-      // 觸發關閉動畫（不是直接隱藏）
       setExitMode("scale");
       setIsClosing(true);
       return;
@@ -54,7 +51,6 @@ export default function PhotoGrid({ photos }: PhotoGridProps) {
     
   }
 
-  // 動畫結束 callback，真正關閉彈窗
   function handleAnimationComplete() {
     if (isClosing) {
       setSelectedPhoto(null);
@@ -131,7 +127,7 @@ export default function PhotoGrid({ photos }: PhotoGridProps) {
               <Image
                 src={photo.content.image}
                 alt={photo.content.title}
-                width={photo.content.width || 800}   // 建議你在 wisp 資料裡補充圖片寬高 
+                width={photo.content.width || 800}  
                 height={photo.content.height || 600}
                 className="rounded-lg w-full h-auto object-cover"
               />
@@ -199,7 +195,7 @@ export default function PhotoGrid({ photos }: PhotoGridProps) {
               >
                 Close ✕
               </button>
-              {/* 左箭頭按鈕 */}
+              {/* Left Button */}
               <button
                 onClick={() => {
                   if (currentIndex !== null && currentIndex > 0) {
@@ -214,7 +210,7 @@ export default function PhotoGrid({ photos }: PhotoGridProps) {
               >
               </button>
 
-              {/* 右箭頭按鈕 */}
+              {/* Right Button */}
               <button
                 onClick={() => {
                   if (currentIndex !== null && currentIndex < sortedPhotos.length - 1) {

@@ -30,38 +30,31 @@ export default async function ProjectDetailPage(context: {params: Promise<{ slug
     const projectContent = content.content;
     const projectTags = projectContent.tags || [];
 
-    // 取得所有 tag 相關的相片清單 (僅 metadata)
     const photosByTags = await Promise.all(
       projectTags.map((tag: string) => getPhotoItemsByProjectTag(tag))
     );
 
     const allPhotos = photosByTags.flat();
-    // 過濾重複並且符合該 project tags 的照片
     const uniquePhotos = Array.from(new Map(allPhotos.map(p => [p.id, p])).values());
     const matchingPhotos = uniquePhotos.filter((photo: any) => {
       const tags = photo.content.tags || [];
       return tags.some((t: string) => projectTags.includes(t));
     });
 
-    // 自動判斷是 Theme 還是 Category
     const tagType = projectTags.find((tag: string) =>
       tag.toLowerCase().startsWith("theme:") || tag.toLowerCase().startsWith("category:")
     );
 
-    // 如果找不到任何主題或分類 tag，直接 notFound
     if (!tagType) return notFound();
 
-    const tagPrefix = tagType.split(":")[0]; // 'Theme' 或 'Category'
+    const tagPrefix = tagType.split(":")[0]; 
 
-    // 根據同一個主題或分類，取得相同 tag 的其他專案
     const relatedProjects = allProjects.contents.filter(p =>
       p.content.tags?.some((t: string) => t.startsWith(tagPrefix))
     );
 
-    // 計算目前專案在這些相關專案中的位置
     const currentIndex = relatedProjects.findIndex(p => p.slug === slug);
 
-    // 添加 position 欄位供 CoverSlider 使用
     const adjacentProjects = relatedProjects.map((p, idx) => ({
       ...p,
       position: idx - currentIndex,

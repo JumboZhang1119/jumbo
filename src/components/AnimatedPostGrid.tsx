@@ -12,7 +12,7 @@ interface Post {
   description?: string;
   publishedAt?: string;
   updatedAt?: string;
-  tags?: (string | { id?: string; name?: string })[];  // 新增 tags 欄位
+  tags?: (string | { id?: string; name?: string })[];
 }
 
 export default function AnimatedPostGrid({ posts }: { posts: Post[] }) {
@@ -57,7 +57,6 @@ export default function AnimatedPostGrid({ posts }: { posts: Post[] }) {
                 {post.description ?? ''}
               </p>
 
-              {/* 新增 tags 顯示區塊 */}
               {post.tags && post.tags.length > 0 && (
                 <div className="mt-3 flex flex-wrap gap-2">
                     {post.tags.map((tag) => {
@@ -68,7 +67,6 @@ export default function AnimatedPostGrid({ posts }: { posts: Post[] }) {
                         </span>
                         );
                     } else {
-                        // 斷言 tag 是物件
                         const tagObj = tag as { id?: string; name?: string };
                         return (
                         <span

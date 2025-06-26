@@ -101,16 +101,14 @@ export default function ProjectsPageWrapper() {
         />
 
         <div className="pt-20">
-          {/* <h1 className="text-4xl font-bold mb-6 text-center tracking-tight">Photography Projects</h1> */}
           <h1 className="text-5xl sm:text-6xl font-medium mb-6 text-center tracking-wide" style={{ fontFamily: 'OneDay, sans-serif' }}>
             Photography
           </h1>
 
           {mode === 'theme' && (
             <div className="mb-6 text-center flex items-center gap-4">
-              {/* 固定在左邊的 All 按鈕 */}
               <button
-                onClick={() => handleFilter('')} // 你可以用 null 或空字串來代表全部
+                onClick={() => handleFilter('')} 
                 className={`flex-shrink-0 cursor-pointer px-4 py-1.5 text-sm rounded-full transition-colors duration-200 whitespace-nowrap ${
                   activeTag === ''
                     ? 'bg-black text-white'
@@ -120,7 +118,6 @@ export default function ProjectsPageWrapper() {
                 All
               </button>
             
-              {/* 可滑動的 tag 按鈕群 */}
               <div className="flex overflow-x-auto whitespace-nowrap gap-2 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200 flex-1">
                 {themeTags.map((tag) => (
                   <button
