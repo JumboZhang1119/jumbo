@@ -9,7 +9,7 @@ const content = `
 
 Hi, I am an undergraduate student from Taiwan currently studying Electrical Engineering at *National Yang Ming Chiao Tung University* (NYCU).
 
-I'm actively involved in academic research, with a current focus on LLMs.
+I'm currently working on a research project focused on LLMs.
 Beyond machine learning, I have a strong interest in software development — both frontend and backend — and emerging technologies. I'm still exploring and learning on my own, and this website is actually my very first full-stack project. It's a space for me to document different aspects of my life: from what I'm learning and researching, to my journey in photography.
 
 **On Photography:**  
