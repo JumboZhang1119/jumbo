@@ -36,7 +36,7 @@ export default async function Page() {
       <GlobalNavbar />
       <div className="container mx-auto px-5 pt-[120px] pb-16">
         <h1
-          className="text-5xl sm:text-6xl font-medium mb-6 text-center tracking-wide"
+          className="text-5xl sm:text-6xl font-medium mb-8 text-center tracking-wide"
           style={{ fontFamily: "OneDay, sans-serif" }}
         >
           Blog

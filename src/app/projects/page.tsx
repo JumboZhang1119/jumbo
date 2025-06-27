@@ -101,12 +101,12 @@ export default function ProjectsPageWrapper() {
         />
 
         <div className="pt-20">
-          <h1 className="text-5xl sm:text-6xl font-medium mb-6 text-center tracking-wide" style={{ fontFamily: 'OneDay, sans-serif' }}>
+          <h1 className="text-5xl sm:text-6xl font-medium mb-8 text-center tracking-wide" style={{ fontFamily: 'OneDay, sans-serif' }}>
             Photography
           </h1>
 
-          {mode === 'theme' && (
-            <div className="mb-6 text-center flex items-center gap-4">
+          {(mode === 'theme' || mode === 'category') && (
+            <div className="mb-6 flex justify-center items-center gap-4 text-center">
               <button
                 onClick={() => handleFilter('')} 
                 className={`flex-shrink-0 cursor-pointer px-4 py-1.5 text-sm rounded-full transition-colors duration-200 whitespace-nowrap ${
@@ -119,7 +119,7 @@ export default function ProjectsPageWrapper() {
               </button>
             
               <div className="flex overflow-x-auto whitespace-nowrap gap-2 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200 flex-1">
-                {themeTags.map((tag) => (
+                {(mode === 'theme' ? themeTags : categoryTags).map((tag) => (
                   <button
                     key={tag}
                     onClick={() => handleFilter(tag)}
@@ -129,7 +129,7 @@ export default function ProjectsPageWrapper() {
                         : 'text-gray-600 hover:text-black bg-neutral-100'
                     }`}
                   >
-                    {tag.replace('Theme:', '')}
+                    {tag.replace(`${mode.charAt(0).toUpperCase() + mode.slice(1)}:`, '')}
                   </button>
                 ))}
               </div>
@@ -137,7 +137,7 @@ export default function ProjectsPageWrapper() {
           
           
           )}
-          <div className={mode === 'theme' ? 'pt-5' : 'pt-8'}></div>
+          <div className='pt-5'></div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {filteredProjects.map((project) => (

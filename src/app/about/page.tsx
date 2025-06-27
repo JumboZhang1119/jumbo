@@ -16,7 +16,7 @@ Beyond machine learning, I have a strong interest in software development — bo
 Photography is a personal passion of mine. Although I've only been seriously into it for about two years, it has quickly become an essential part of how I experience and reflect on life. While I'm still learning photograpy skills, to me, is more than a hobby. It's a way of preserving moments. I mainly focus on *Street*, *Landscape*, and *Architecture* photography, where I enjoy capturing the beauty and stories of urban, natural and built environments.
 Through the lens, I find joy in capturing the world around me — people, places, emotions. Every photo I take is a fragment of memory, and looking back at them often brings me right back to those moments. With this site, I hope to share not only my photos, but also the stories and experiences that come with them.
 
-Thanks for stopping by, and I hope you enjoy your visit!
+Thanks for stopping by!
 
 — Jumbo
 `;
