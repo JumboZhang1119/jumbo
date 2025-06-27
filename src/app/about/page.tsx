@@ -24,11 +24,11 @@ Thanks for stopping by!
 export async function generateMetadata() {
   return {
     title: {
-      absolute: "Po-Feng's Web", 
+      absolute: "Blog & Photography | Jumbo Zhang", 
     },
     description: "This is a page about Po-Feng Chang.",
     openGraph: {
-      title: "Po-Feng's Web",
+      title: "Blog & Photography | Jumbo Zhang",
       description: "This is a page about Po-Feng Chang.",
       images: [
         "https://res.cloudinary.com/dvxhki7cj/image/upload/v1750587629/DSC01179_1_tx3da4.jpg",
