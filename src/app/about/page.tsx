@@ -54,7 +54,7 @@ const Page = async () => {
           />
         </div>
         <div className="prose mb-5 mx-auto max-w-2xl text-center">
-          <h1 className="text-4xl font-bbold mb-3">PO-FENG ZHANG</h1>
+          <h1 className="text-4xl font-bbold mb-3">PO-FENG CHANG</h1>
           <h1 className="text-2xl font-bbold mb-2">張柏豐</h1>
         </div>
         <SocialLinks />
